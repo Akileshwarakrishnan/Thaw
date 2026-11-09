@@ -20,22 +20,22 @@ export function AuditLogDrawer({ logs }: AuditLogDrawerProps) {
     switch (actor) {
       case "ai":
         return (
-          <span className="flex items-center gap-1 rounded bg-purple-500/15 px-1.5 py-0.5 text-[10px] font-semibold text-purple-300 border border-purple-500/30">
-            <Bot className="h-3 w-3" />
+          <span className="flex items-center gap-1 rounded-md bg-purple-100 px-2 py-0.5 text-[10px] font-bold text-purple-800 border border-purple-200">
+            <Bot className="h-3 w-3 text-purple-700" />
             AI Agent
           </span>
         );
       case "seller":
         return (
-          <span className="flex items-center gap-1 rounded bg-brand-500/15 px-1.5 py-0.5 text-[10px] font-semibold text-brand-300 border border-brand-500/30">
-            <User className="h-3 w-3" />
+          <span className="flex items-center gap-1 rounded-md bg-[#84bbe3]/20 px-2 py-0.5 text-[10px] font-bold text-[#1c346c] border border-[#84bbe3]/40">
+            <User className="h-3 w-3 text-[#1c346c]" />
             Merchant
           </span>
         );
       default:
         return (
-          <span className="flex items-center gap-1 rounded bg-slate-800 px-1.5 py-0.5 text-[10px] font-semibold text-slate-300 border border-slate-700">
-            <Shield className="h-3 w-3 text-slate-400" />
+          <span className="flex items-center gap-1 rounded-md bg-[#F0F5F7] px-2 py-0.5 text-[10px] font-bold text-[#526699] border border-[#E4E6EE]">
+            <Shield className="h-3 w-3 text-[#64759d]" />
             System
           </span>
         );
@@ -43,24 +43,26 @@ export function AuditLogDrawer({ logs }: AuditLogDrawerProps) {
   };
 
   return (
-    <div className="glass-panel glass-panel-hover rounded-2xl p-6 space-y-4">
+    <div className="casper-card casper-card-hover p-6 space-y-4">
       {/* Header */}
-      <div className="flex items-center justify-between border-b border-slate-800/80 pb-3">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[#E4E6EE] pb-3">
         <div className="flex items-center gap-2">
-          <History className="h-4 w-4 text-brand-400" />
-          <h3 className="text-base font-semibold text-white">
+          <div className="rounded-lg bg-[#F0F5F7] p-2 text-[#4a4af4] border border-[#E4E6EE]">
+            <History className="h-4 w-4" />
+          </div>
+          <h3 className="text-base font-bold text-[#1c346c]">
             Immutable Audit Trail & Webhook Telemetry
           </h3>
         </div>
-        <span className="text-[11px] text-slate-400">
-          Complete compliance ledger of all decisions and PayPal events
+        <span className="text-xs text-[#526699]">
+          Verifiable ledger of every AI proposal, merchant approval, and PayPal event
         </span>
       </div>
 
       {/* Log Feed */}
-      <div className="space-y-2.5 max-h-72 overflow-y-auto pr-1">
+      <div className="space-y-2.5 max-h-80 overflow-y-auto pr-1">
         {logs.length === 0 ? (
-          <p className="text-xs text-slate-400 text-center py-6">
+          <p className="text-xs text-[#526699] text-center py-8">
             No audit records logged yet.
           </p>
         ) : (
@@ -74,19 +76,19 @@ export function AuditLogDrawer({ logs }: AuditLogDrawerProps) {
             return (
               <div
                 key={log.id}
-                className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 rounded-xl border border-slate-800/70 bg-slate-900/40 p-2.5 text-xs hover:border-slate-700 transition-colors"
+                className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 rounded-xl border border-[#E4E6EE] bg-[#F0F5F7]/50 p-2.5 text-xs hover:bg-[#F0F5F7] hover:border-[#84bbe3] transition-colors"
               >
-                <div className="flex items-center gap-2">
-                  <span className="font-mono text-[11px] text-slate-400 shrink-0">
+                <div className="flex items-center gap-2.5 flex-wrap">
+                  <span className="font-mono text-[11px] text-[#64759d] shrink-0 font-medium">
                     {timeStr}
                   </span>
                   {getActorBadge(log.actor)}
-                  <span className="font-semibold text-slate-200">
+                  <span className="font-bold text-[#1c346c]">
                     {log.event.replace(/_/g, " ")}
                   </span>
                 </div>
 
-                <div className="text-[11px] text-slate-400 truncate max-w-sm">
+                <div className="text-[11px] text-[#526699] truncate max-w-md">
                   {log.details?.title ||
                     log.details?.message ||
                     (log.details?.score !== undefined ? `Score: ${log.details.score}/100 (${log.details.band})` : "") ||

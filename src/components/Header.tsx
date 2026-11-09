@@ -40,72 +40,72 @@ export function Header({
   isSwitching,
 }: HeaderProps) {
   return (
-    <header className="border-b border-slate-800/80 bg-slate-950/70 backdrop-blur-xl sticky top-0 z-40">
+    <header className="border-b border-[#E4E6EE] bg-white/95 backdrop-blur-md sticky top-0 z-40 shadow-sm">
       <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-4 px-4 py-3 sm:px-6">
         {/* Brand & Store Name */}
         <div className="flex items-center gap-3">
-          <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-[#84bbe3] via-[#1c346c] to-[#0c1836] shadow-md shadow-[#1c346c]/30 border border-[#84bbe3]/30">
-            <Shield className="h-6 w-6 text-white" />
+          <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-[#84bbe3] via-[#1c346c] to-[#0c1836] shadow-sm text-white">
+            <Shield className="h-6 w-6" />
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <span className="text-xl font-bold tracking-tight text-white">
+              <span className="text-xl font-bold tracking-tight text-[#1c346c]">
                 Thaw
               </span>
-              <span className="rounded-full bg-[#84bbe3]/10 px-2.5 py-0.5 text-xs font-semibold text-[#84bbe3] border border-[#84bbe3]/30">
+              <span className="rounded-full bg-[#84bbe3]/20 px-2.5 py-0.5 text-xs font-semibold text-[#1c346c] border border-[#84bbe3]/40">
                 built for PayPal sellers
               </span>
-              <span className="flex items-center gap-1 rounded-full bg-emerald-500/10 px-2 py-0.5 text-[11px] font-medium text-emerald-400 border border-emerald-500/20">
-                <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+              <span className="flex items-center gap-1 rounded-full bg-emerald-50 px-2 py-0.5 text-[11px] font-semibold text-emerald-700 border border-emerald-200">
+                <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
                 Sandbox Live
               </span>
             </div>
-            <div className="flex items-center gap-2 text-xs text-[#a2b4cc]">
-              <Store className="h-3 w-3 text-[#84bbe3]" />
-              <span>{storeName || "Active Merchant Account"}</span>
+            <div className="flex items-center gap-2 text-xs text-[#526699]">
+              <Store className="h-3 w-3 text-[#1c346c]" />
+              <span className="font-medium">{storeName || "Active Merchant Account"}</span>
             </div>
           </div>
         </div>
 
         {/* Demo Scenario Switcher (One-Click Testing for Judges) */}
-        <div className="flex items-center gap-1 rounded-xl bg-slate-900/90 p-1 border border-slate-800">
-          <span className="px-2 text-xs font-semibold text-slate-400 uppercase tracking-wider">
-            Demo Scenarios:
+        <div className="flex items-center gap-1 rounded-xl bg-[#F0F5F7] p-1 border border-[#E4E6EE]">
+          <span className="px-2 text-[11px] font-bold text-[#526699] uppercase tracking-wider">
+            Demo Store:
           </span>
           <button
             onClick={() => onSwitchScenario("healthy")}
             disabled={isSwitching}
-            className={`flex items-center gap-1.5 rounded-lg px-2.5 py-1 text-xs font-medium transition-all ${
+            className={`flex items-center gap-1.5 rounded-lg px-2.5 py-1 text-xs font-semibold transition-all ${
               currentScenario === "healthy"
-                ? "bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 shadow-sm"
-                : "text-slate-400 hover:text-slate-200 hover:bg-slate-800/60"
+                ? "bg-white text-emerald-800 border border-emerald-300 shadow-sm"
+                : "text-[#526699] hover:text-[#1c346c] hover:bg-white/60"
             }`}
           >
-            <CheckCircle2 className="h-3.5 w-3.5 text-emerald-400" />
+            <CheckCircle2 className="h-3.5 w-3.5 text-emerald-600" />
             Healthy
           </button>
           <button
             onClick={() => onSwitchScenario("drifting")}
             disabled={isSwitching}
-            className={`flex items-center gap-1.5 rounded-lg px-2.5 py-1 text-xs font-medium transition-all ${
+            className={`flex items-center gap-1.5 rounded-lg px-2.5 py-1 text-xs font-semibold transition-all ${
               currentScenario === "drifting"
-                ? "bg-amber-500/20 text-amber-300 border border-amber-500/40 shadow-sm"
-                : "text-slate-400 hover:text-slate-200 hover:bg-slate-800/60"
+                ? "bg-white text-amber-800 border border-amber-300 shadow-sm ring-1 ring-amber-300"
+                : "text-[#526699] hover:text-[#1c346c] hover:bg-white/60"
             }`}
           >
-            <AlertTriangle className="h-3.5 w-3.5 text-amber-400" />
-            Drifting
+            <AlertTriangle className="h-3.5 w-3.5 text-amber-600" />
+            Drifting (Target)
           </button>
           <button
             onClick={() => onSwitchScenario("post_spike")}
             disabled={isSwitching}
-            className={`flex items-center gap-1.5 rounded-lg px-2.5 py-1 text-xs font-medium transition-all ${
+            className={`flex items-center gap-1.5 rounded-lg px-2.5 py-1 text-xs font-semibold transition-all ${
               currentScenario === "post_spike"
-                ? "bg-rose-500/20 text-rose-300 border border-rose-500/40 shadow-sm"
-                : "text-slate-400 hover:text-slate-200 hover:bg-slate-800/60"
+                ? "bg-white text-rose-800 border border-rose-300 shadow-sm"
+                : "text-[#526699] hover:text-[#1c346c] hover:bg-white/60"
             }`}
           >
-            <Flame className="h-3.5 w-3.5 text-rose-400" />
+            <Flame className="h-3.5 w-3.5 text-rose-600" />
             Post-Spike
           </button>
         </div>
@@ -114,39 +114,39 @@ export function Header({
         <div className="flex items-center gap-2 flex-wrap">
           <button
             onClick={onOpenTour}
-            className="flex items-center gap-1.5 rounded-lg border border-purple-500/40 bg-purple-500/15 px-3 py-1.5 text-xs font-semibold text-purple-300 hover:bg-purple-500/25 transition-colors shadow-sm"
+            className="flex items-center gap-1.5 rounded-lg border border-purple-200 bg-purple-50 px-3 py-1.5 text-xs font-bold text-purple-700 hover:bg-purple-100 transition-colors shadow-sm"
             title="Open 30-Second Guided Tour for Judges"
           >
-            <Sparkles className="h-3.5 w-3.5 text-purple-400" />
+            <Sparkles className="h-3.5 w-3.5 text-purple-600" />
             30s Tour
           </button>
 
           <button
             onClick={onOpenE2EProof}
-            className="flex items-center gap-1.5 rounded-lg border border-emerald-500/40 bg-emerald-500/15 px-3 py-1.5 text-xs font-semibold text-emerald-300 hover:bg-emerald-500/25 transition-colors shadow-sm"
+            className="flex items-center gap-1.5 rounded-lg border border-emerald-200 bg-emerald-50 px-3 py-1.5 text-xs font-bold text-emerald-700 hover:bg-emerald-100 transition-colors shadow-sm"
             title="Execute Real 5-Step Sandbox Verification Cycle"
           >
-            <Shield className="h-3.5 w-3.5 text-emerald-400" />
+            <Shield className="h-3.5 w-3.5 text-emerald-600" />
             PayPal Proof
           </button>
 
           <button
             onClick={onSimulateWebhook}
-            className="flex items-center gap-1.5 rounded-lg border border-slate-700 bg-slate-900/80 px-2.5 py-1.5 text-xs font-medium text-slate-300 hover:border-brand-500/50 hover:bg-slate-800 transition-colors"
+            className="flex items-center gap-1.5 rounded-lg border border-[#E4E6EE] bg-white px-2.5 py-1.5 text-xs font-medium text-[#1c346c] hover:bg-slate-50 transition-colors shadow-sm"
             title="Simulate incoming PayPal webhook"
           >
-            <Zap className="h-3.5 w-3.5 text-amber-400" />
+            <Zap className="h-3.5 w-3.5 text-amber-500" />
             Webhook
           </button>
 
           <button
             onClick={onSync}
             disabled={isSyncing}
-            className="flex items-center gap-1.5 rounded-lg border border-slate-700 bg-slate-900/80 px-3 py-1.5 text-xs font-medium text-slate-300 hover:border-brand-500/50 hover:bg-slate-800 transition-colors"
+            className="flex items-center gap-1.5 rounded-lg border border-[#E4E6EE] bg-white px-3 py-1.5 text-xs font-medium text-[#1c346c] hover:bg-slate-50 transition-colors shadow-sm"
             title="Pull transactions, disputes, and tracking status"
           >
             <RefreshCw
-              className={`h-3.5 w-3.5 text-brand-400 ${
+              className={`h-3.5 w-3.5 text-[#1c346c] ${
                 isSyncing ? "animate-spin" : ""
               }`}
             />
@@ -155,7 +155,7 @@ export function Header({
 
           <button
             onClick={onOpenConnectModal}
-            className="flex items-center gap-1.5 rounded-lg bg-[#1c346c] hover:bg-[#25448c] border border-[#84bbe3]/30 px-3 py-1.5 text-xs font-semibold text-white shadow-casper-sm transition-colors"
+            className="flex items-center gap-1.5 rounded-lg bg-[#1c346c] hover:bg-[#162a56] px-3.5 py-1.5 text-xs font-bold text-white shadow-sm transition-colors"
             title="Configure PayPal Sandbox credentials"
           >
             <Sliders className="h-3.5 w-3.5 text-[#84bbe3]" />

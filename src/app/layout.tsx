@@ -13,11 +13,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="dark">
+    <html lang="en">
       <head>
         <link rel="icon" href="/favicon.ico" sizes="any" />
       </head>
-      <body className="antialiased selection:bg-brand-500 selection:text-white">
+      <body className="antialiased selection:bg-[#84bbe3] selection:text-[#1c346c] text-[#0c0c14] bg-[#F0F5F7]">
         {children}
       </body>
     </html>

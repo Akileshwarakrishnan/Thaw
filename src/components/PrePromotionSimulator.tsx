@@ -29,100 +29,100 @@ export function PrePromotionSimulator({
   const projectedHoldExposure = projectedScore >= 67 ? projectedWeeklyVolume * 0.3 : projectedWeeklyVolume * 0.1;
 
   return (
-    <div className="glass-panel glass-panel-hover rounded-2xl p-6 space-y-4">
+    <div className="casper-card casper-card-hover p-6 space-y-4">
       {/* Header */}
-      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800/80 pb-3">
+      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[#E4E6EE] pb-3">
         <div className="flex items-center gap-2">
-          <div className="rounded-md bg-amber-500/10 p-1.5 text-amber-400 border border-amber-500/20">
+          <div className="rounded-lg bg-amber-50 p-2 text-amber-700 border border-amber-200">
             <Zap className="h-4 w-4" />
           </div>
           <div>
-            <h3 className="text-base font-semibold text-white">
+            <h3 className="text-base font-bold text-[#1c346c]">
               Pre-Promotion Warning & Volume Spike Simulator
             </h3>
-            <p className="text-[11px] text-slate-400">
-              Test upcoming marketing spikes (e.g. Black Friday) to avoid automated velocity holds.
+            <p className="text-xs text-[#526699]">
+              Simulate upcoming marketing spikes (e.g. Flash Sales, Black Friday) before automated velocity holds trigger.
             </p>
           </div>
         </div>
-        <span className="rounded-full bg-amber-500/10 px-2.5 py-0.5 text-[11px] font-medium text-amber-400 border border-amber-500/20">
-          Proactive Protection
+        <span className="rounded-full bg-amber-50 px-3 py-1 text-xs font-bold text-amber-800 border border-amber-200">
+          Proactive Risk Hedging
         </span>
       </div>
 
       {/* Interactive Spike Controls */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-1">
         <div className="space-y-3">
-          <label className="text-xs font-semibold text-slate-300 block">
-            Select Anticipated Sales Spike:
+          <label className="text-xs font-bold text-[#1c346c] block">
+            Select Anticipated Sales Multiplier:
           </label>
           <div className="grid grid-cols-3 gap-2">
             {[1.8, 2.5, 4.0].map((m) => (
               <button
                 key={m}
                 onClick={() => setMultiplier(m)}
-                className={`rounded-lg py-2 px-2 text-xs font-bold transition-all ${
+                className={`rounded-lg py-2.5 px-2 text-xs font-bold transition-all ${
                   multiplier === m
-                    ? "bg-amber-500 text-slate-950 shadow-md shadow-amber-500/20"
-                    : "bg-slate-900 text-slate-300 border border-slate-800 hover:border-slate-700"
+                    ? "bg-[#1c346c] text-white shadow-md shadow-[#1c346c]/20"
+                    : "bg-[#F0F5F7] text-[#526699] border border-[#E4E6EE] hover:border-[#84bbe3] hover:text-[#1c346c]"
                 }`}
               >
-                {m}x {m === 1.8 ? "Sale" : m === 2.5 ? "Flash" : "Mega"}
+                {m}x {m === 1.8 ? "Promo" : m === 2.5 ? "Flash" : "Mega"}
               </button>
             ))}
           </div>
-          <p className="text-[11px] text-slate-400">
-            Simulating a <strong>{multiplier}x</strong> sudden increase in sales velocity over 72 hours.
+          <p className="text-xs text-[#526699]">
+            Simulating a <strong className="text-[#1c346c]">{multiplier}x</strong> sudden increase in sales velocity over 72 hours.
           </p>
         </div>
 
         {/* Projected Impact Meters */}
-        <div className="rounded-xl border border-slate-800 bg-slate-900/60 p-3 space-y-2">
-          <span className="text-[11px] font-semibold uppercase text-slate-400 block">
+        <div className="rounded-xl border border-[#E4E6EE] bg-[#F0F5F7]/80 p-3.5 space-y-2.5">
+          <span className="text-[11px] font-bold uppercase tracking-wider text-[#526699] block">
             Projected Underwriting Impact
           </span>
           <div className="flex items-baseline justify-between">
-            <span className="text-xs text-slate-300">Projected 7d Sales:</span>
-            <span className="text-sm font-bold text-white">
+            <span className="text-xs text-[#526699]">Projected 7-Day Sales:</span>
+            <span className="text-sm font-bold text-[#1c346c]">
               ${projectedWeeklyVolume.toLocaleString("en-US", { maximumFractionDigits: 0 })}
             </span>
           </div>
           <div className="flex items-baseline justify-between">
-            <span className="text-xs text-slate-300">Risk Score Jump:</span>
-            <span className="text-sm font-bold text-rose-400">
+            <span className="text-xs text-[#526699]">Risk Score Shift:</span>
+            <span className="text-sm font-bold text-[#cc352c]">
               +{pointsAdded} pts ({projectedScore}/100)
             </span>
           </div>
-          <div className="flex items-baseline justify-between pt-1 border-t border-slate-800/80">
-            <span className="text-xs text-slate-300">Estimated Held Reserve:</span>
-            <span className="text-sm font-bold text-amber-400">
+          <div className="flex items-baseline justify-between pt-1.5 border-t border-[#E4E6EE]">
+            <span className="text-xs text-[#526699]">Estimated Held Reserve:</span>
+            <span className="text-sm font-bold text-amber-700">
               ${projectedHoldExposure.toLocaleString("en-US", { maximumFractionDigits: 0 })}
             </span>
           </div>
         </div>
 
         {/* Proactive Resolution Action */}
-        <div className="rounded-xl border border-brand-500/30 bg-brand-950/20 p-3 space-y-2.5 flex flex-col justify-between">
+        <div className="rounded-xl border border-[#84bbe3] bg-[#84bbe3]/10 p-3.5 space-y-2.5 flex flex-col justify-between">
           <div className="space-y-1">
-            <span className="text-[11px] font-semibold text-brand-300 flex items-center gap-1.5">
-              <ShieldCheck className="h-3.5 w-3.5 text-brand-400" />
+            <span className="text-xs font-bold text-[#1c346c] flex items-center gap-1.5">
+              <ShieldCheck className="h-4 w-4 text-[#4a4af4]" />
               Preemptive Defense Strategy
             </span>
-            <p className="text-[11px] text-slate-300 leading-relaxed">
-              Notify PayPal Underwriting 5 days prior with warehouse pickup proofs. PayPal will whitelist the velocity increase.
+            <p className="text-xs text-[#526699] leading-relaxed">
+              Notify PayPal Underwriting 5 days prior with warehouse pickup proofs. PayPal will whitelist the velocity increase and waive automated rolling reserves.
             </p>
           </div>
 
           {submitted ? (
-            <div className="rounded-lg bg-emerald-500/20 border border-emerald-500/30 p-2 text-center text-xs font-semibold text-emerald-300">
+            <div className="rounded-lg bg-emerald-100 border border-emerald-300 p-2 text-center text-xs font-bold text-emerald-800">
               ✓ Pre-Notification Dispatched to PayPal Underwriting!
             </div>
           ) : (
             <button
               onClick={() => setSubmitted(true)}
-              className="w-full flex items-center justify-center gap-1.5 rounded-lg bg-brand-600 py-1.5 px-3 text-xs font-semibold text-white hover:bg-brand-500 transition-colors shadow-sm"
+              className="w-full flex items-center justify-center gap-1.5 rounded-lg bg-[#1c346c] py-2 px-3 text-xs font-bold text-white hover:bg-[#152752] transition-colors shadow-sm"
             >
-              <Send className="h-3 w-3" />
+              <Send className="h-3.5 w-3.5" />
               Notify PayPal Underwriting
             </button>
           )}

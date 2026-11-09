@@ -9,54 +9,67 @@
   --color-brand-slate: #64759d;
   --color-brand-frost: #a2b4cc;
   --color-brand-alert: #cc352c;
-  --background: #090e1a;
-  --foreground: #f1f5f9;
+  --background: #F0F5F7;
+  --foreground: #0c0c14;
 }
 
 body {
-  color: var(--foreground);
-  background: radial-gradient(circle at 15% 10%, #15274d 0%, #090e1a 45%, #050811 100%);
+  color: #0c0c14;
+  background-color: #F0F5F7;
   min-height: 100vh;
   font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  background-image: radial-gradient(at 0% 0%, rgba(132, 187, 227, 0.18) 0px, transparent 50%),
+                    radial-gradient(at 100% 0%, rgba(28, 52, 108, 0.08) 0px, transparent 50%);
 }
 
-/* Casper-inspired refined panels: clean, airy, gentle shadows */
+/* Casper-inspired cards: clean, airy, gentle shadows on crisp white */
+.casper-card {
+  background: #FFFFFF;
+  border: 1px solid #E4E6EE;
+  box-shadow: 0 4px 20px rgba(28, 52, 108, 0.06), 0 1px 3px rgba(28, 52, 108, 0.03);
+  border-radius: 16px;
+}
+
+.casper-card-hover {
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.casper-card-hover:hover {
+  border-color: #84bbe3;
+  box-shadow: 0 12px 35px rgba(28, 52, 108, 0.10);
+  transform: translateY(-2px);
+}
+
+/* Backward compatibility for existing class names */
 .glass-panel {
-  background: rgba(14, 23, 46, 0.75);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(132, 187, 227, 0.14);
-  box-shadow: 0 5px 30px rgba(28, 52, 108, 0.12);
+  background: #FFFFFF;
+  border: 1px solid #E4E6EE;
+  box-shadow: 0 4px 20px rgba(28, 52, 108, 0.06);
+  border-radius: 16px;
 }
 
 .glass-panel-hover {
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
-.glass-panel-hover:hover {
-  border-color: rgba(132, 187, 227, 0.35);
-  box-shadow: 0 12px 35px -5px rgba(28, 52, 108, 0.28);
-  transform: translateY(-1px);
-}
 
-/* Crisp button & card pills */
-.casper-badge {
-  border-radius: 9999px;
-  font-weight: 600;
-  letter-spacing: 0.02em;
+.glass-panel-hover:hover {
+  border-color: #84bbe3;
+  box-shadow: 0 12px 35px rgba(28, 52, 108, 0.10);
+  transform: translateY(-2px);
 }
 
 /* Custom scrollbars */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 7px;
+  height: 7px;
 }
 ::-webkit-scrollbar-track {
-  background: #090e1a;
+  background: #F0F5F7;
 }
 ::-webkit-scrollbar-thumb {
-  background: #1c346c;
+  background: #a2b4cc;
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #25448c;
+  background: #64759d;
 }

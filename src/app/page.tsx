@@ -16,7 +16,22 @@ import { ConnectModal } from "@/components/ConnectModal";
 import { GuidedTourModal } from "@/components/GuidedTourModal";
 import { E2EProofModal } from "@/components/E2EProofModal";
 import { RiskBand, RiskSignalsBreakdown, CashFlowMetrics } from "@/lib/risk/types";
-import { Loader2, RefreshCw, CheckCircle, ArrowDownRight, Sparkles, X } from "lucide-react";
+import {
+  Loader2,
+  RefreshCw,
+  CheckCircle,
+  ArrowDownRight,
+  Sparkles,
+  X,
+  Shield,
+  SlidersHorizontal,
+  Package,
+  Zap,
+  History,
+  LayoutGrid,
+  Play,
+  ArrowRight,
+} from "lucide-react";
 
 export default function DashboardPage() {
   const [loading, setLoading] = useState(true);
@@ -24,6 +39,7 @@ export default function DashboardPage() {
   const [storeName, setStoreName] = useState("ApexGear Apparel (Drifting Store)");
   const [isSyncing, setIsSyncing] = useState(false);
   const [isSwitching, setIsSwitching] = useState(false);
+  const [activeTab, setActiveTab] = useState<"shield" | "signals" | "orders" | "simulator" | "audit" | "all">("shield");
 
   // Core risk snapshot data
   const [score, setScore] = useState<number>(63);
@@ -240,18 +256,18 @@ export default function DashboardPage() {
 
   if (loading) {
     return (
-      <div className="flex h-screen w-screen flex-col items-center justify-center bg-slate-950 text-white space-y-4">
-        <Loader2 className="h-10 w-10 animate-spin text-brand-400" />
-        <div className="text-center">
-          <p className="text-sm font-semibold">Initializing Thaw Early-Warning Engine...</p>
-          <p className="text-xs text-slate-400">Loading PayPal sandbox signals and deterministic trigger weights</p>
+      <div className="flex h-screen w-screen flex-col items-center justify-center bg-[#F0F5F7] text-[#1c346c] space-y-4">
+        <Loader2 className="h-10 w-10 animate-spin text-[#1c346c]" />
+        <div className="text-center space-y-1">
+          <p className="text-base font-bold text-[#1c346c]">Initializing Thaw Early-Warning Engine...</p>
+          <p className="text-xs text-[#526699]">Loading PayPal sandbox telemetry and deterministic trigger weights</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen pb-16 flex flex-col justify-between">
+    <div className="min-h-screen pb-16 flex flex-col justify-between bg-[#F0F5F7]">
       <div>
         {/* App Header & Scenario Switcher */}
         <Header
@@ -271,33 +287,33 @@ export default function DashboardPage() {
         <main className="mx-auto max-w-7xl px-4 sm:px-6 pt-6 space-y-6">
           {/* Action Impact Celebratory Banner */}
           {actionImpactAlert && (
-            <div className="rounded-xl border border-emerald-500/40 bg-emerald-950/40 p-4 backdrop-blur-md flex items-center justify-between animate-in fade-in slide-in-from-top duration-300">
+            <div className="rounded-xl border border-emerald-300 bg-emerald-50 p-4 shadow-sm flex items-center justify-between animate-in fade-in slide-in-from-top duration-300">
               <div className="flex items-center gap-3">
-                <div className="rounded-lg bg-emerald-500/20 p-2 text-emerald-400">
+                <div className="rounded-lg bg-emerald-100 p-2 text-emerald-800">
                   <CheckCircle className="h-5 w-5" />
                 </div>
                 <div>
                   <div className="flex items-center gap-2 flex-wrap">
-                    <span className="font-bold text-white text-sm">
+                    <span className="font-bold text-emerald-950 text-sm">
                       Action Executed via{" "}
                       {actionImpactAlert.channel === "PAYPAL_AGENT_TOOLKIT"
                         ? "PayPal Agent Toolkit (MCP Protocol)"
                         : "PayPal REST Client"}
                       !
                     </span>
-                    <span className="rounded bg-emerald-500/25 px-2 py-0.5 text-xs font-extrabold text-emerald-300 border border-emerald-500/40 flex items-center gap-0.5">
+                    <span className="rounded-md bg-emerald-200 px-2 py-0.5 text-xs font-extrabold text-emerald-900 border border-emerald-300 flex items-center gap-0.5">
                       <ArrowDownRight className="h-3.5 w-3.5" />
                       -{actionImpactAlert.pointsDropped} pts Risk Drop
                     </span>
                   </div>
-                  <p className="text-xs text-slate-300 mt-0.5">
+                  <p className="text-xs text-emerald-800 mt-0.5">
                     {actionImpactAlert.message}. Cash-flow hold exposure updated in real time.
                   </p>
                 </div>
               </div>
               <button
                 onClick={() => setActionImpactAlert(null)}
-                className="text-slate-400 hover:text-white p-1"
+                className="text-emerald-700 hover:text-emerald-950 p-1"
               >
                 <X className="h-4 w-4" />
               </button>
@@ -307,72 +323,238 @@ export default function DashboardPage() {
           {/* Honest Limitation Banner */}
           <HonestNotice />
 
-          {/* Cash Flow Shield Section */}
-          <CashFlowShield cashFlow={cashFlow} band={band} />
-
-          {/* Core Risk Gauge & AI Diagnosis Grid */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-            {/* Visual Risk Gauge (4 cols) */}
-            <div className="lg:col-span-4">
-              <RiskGauge
-                score={score}
-                band={band}
-                evaluatedAt={evaluatedAt}
-                history={scoreHistory}
-              />
+          {/* Judge Quick-Start Guide Card (Effortless 10-Second Orientation) */}
+          <div className="casper-card p-5 border-l-4 border-l-[#1c346c] space-y-3 bg-gradient-to-r from-white via-white to-[#84bbe3]/10">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[#E4E6EE] pb-2.5">
+              <div className="flex items-center gap-2">
+                <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-[#1c346c] text-white text-xs font-bold">
+                  ⚖️
+                </div>
+                <div>
+                  <h2 className="text-sm font-bold text-[#1c346c]">
+                    Judge Evaluation Guide: How to Test Thaw in 30 Seconds
+                  </h2>
+                  <p className="text-[11px] text-[#526699]">
+                    Follow these 3 simple steps to verify early-warning detection, AI diagnosis, and approval-gated resolution.
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-center gap-2 self-start sm:self-auto">
+                <button
+                  onClick={() => setIsTourOpen(true)}
+                  className="inline-flex items-center gap-1 rounded-lg bg-purple-50 px-2.5 py-1 text-xs font-bold text-purple-700 border border-purple-200 hover:bg-purple-100 transition-colors shadow-xs"
+                >
+                  <Sparkles className="h-3.5 w-3.5" />
+                  30s Tour
+                </button>
+                <button
+                  onClick={() => setIsE2EProofOpen(true)}
+                  className="inline-flex items-center gap-1 rounded-lg bg-emerald-50 px-2.5 py-1 text-xs font-bold text-emerald-800 border border-emerald-300 hover:bg-emerald-100 transition-colors shadow-xs"
+                >
+                  <Play className="h-3.5 w-3.5 text-emerald-700" />
+                  Run Live PayPal Proof
+                </button>
+              </div>
             </div>
 
-            {/* AI Diagnosis & Plain-Language Explanation (8 cols) */}
-            <div className="lg:col-span-8">
-              <ExplanationPanel
-                summary={explanation.summary}
-                topReasons={explanation.topReasons}
-                model={explanation.model}
-                onSelectActionTab={() => {
-                  const el = document.getElementById("action-queue-section");
-                  if (el) el.scrollIntoView({ behavior: "smooth" });
-                }}
-              />
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3 pt-1">
+              {/* Step 1 */}
+              <div className="rounded-xl border border-[#E4E6EE] bg-[#F0F5F7]/60 p-3 space-y-1">
+                <span className="text-[10px] font-extrabold uppercase tracking-wider text-[#1c346c] block">
+                  Step 1: Check Risk & Held Reserve
+                </span>
+                <p className="text-xs text-[#526699] leading-relaxed">
+                  Notice the <strong>63/100 Hold Score</strong> on the Drifting scenario with <strong>$303 held in 10% rolling reserve</strong>. Thaw catches this before PayPal freezes money.
+                </p>
+              </div>
+
+              {/* Step 2 */}
+              <div className="rounded-xl border border-[#E4E6EE] bg-[#F0F5F7]/60 p-3 space-y-1">
+                <span className="text-[10px] font-extrabold uppercase tracking-wider text-[#1c346c] block">
+                  Step 2: Read Plain-Language AI Diagnosis
+                </span>
+                <p className="text-xs text-[#526699] leading-relaxed">
+                  See the Gemini plain-English explanation pinpointing exactly why: <strong>14 unfulfilled tracking IDs</strong> and a sudden velocity surge.
+                </p>
+              </div>
+
+              {/* Step 3 */}
+              <div className="rounded-xl border border-[#E4E6EE] bg-[#F0F5F7]/60 p-3 space-y-1">
+                <span className="text-[10px] font-extrabold uppercase tracking-wider text-emerald-800 block">
+                  Step 3: Click "Approve & Execute" Below
+                </span>
+                <p className="text-xs text-[#526699] leading-relaxed">
+                  Approve an action in the queue. Watch it dispatch via <strong>PayPal Agent Toolkit</strong>, drop the risk score, and release funds live!
+                </p>
+              </div>
             </div>
           </div>
 
-          {/* 6 Documented Risk Signals Breakdown */}
-          {signals && <SignalMeters signals={signals} />}
+          {/* Organized Tab Navigation Bar for Clean Judge Browsing */}
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#E4E6EE] pb-2">
+            <div className="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0 scrollbar-none">
+              <button
+                onClick={() => setActiveTab("shield")}
+                className={`flex items-center gap-2 rounded-xl px-4 py-2 text-xs font-bold transition-all shrink-0 ${
+                  activeTab === "shield"
+                    ? "bg-[#1c346c] text-white shadow-sm"
+                    : "bg-white text-[#526699] border border-[#E4E6EE] hover:text-[#1c346c]"
+                }`}
+              >
+                <Shield className="h-4 w-4" />
+                1. Risk & Action Shield (Main Demo)
+              </button>
 
-          {/* AI Action Agent Queue (Approval-Gated) */}
-          <div id="action-queue-section">
-            <ActionQueue
-              actions={actions}
-              onApprove={handleApproveAction}
-              onReject={handleRejectAction}
-              onOpenAppealModal={handleOpenAppealModal}
-            />
+              <button
+                onClick={() => setActiveTab("signals")}
+                className={`flex items-center gap-2 rounded-xl px-4 py-2 text-xs font-bold transition-all shrink-0 ${
+                  activeTab === "signals"
+                    ? "bg-[#1c346c] text-white shadow-sm"
+                    : "bg-white text-[#526699] border border-[#E4E6EE] hover:text-[#1c346c]"
+                }`}
+              >
+                <SlidersHorizontal className="h-4 w-4" />
+                2. 6 Documented Signals & Evidence
+              </button>
+
+              <button
+                onClick={() => setActiveTab("orders")}
+                className={`flex items-center gap-2 rounded-xl px-4 py-2 text-xs font-bold transition-all shrink-0 ${
+                  activeTab === "orders"
+                    ? "bg-[#1c346c] text-white shadow-sm"
+                    : "bg-white text-[#526699] border border-[#E4E6EE] hover:text-[#1c346c]"
+                }`}
+              >
+                <Package className="h-4 w-4" />
+                3. Orders & Telemetry Ledger
+              </button>
+
+              <button
+                onClick={() => setActiveTab("simulator")}
+                className={`flex items-center gap-2 rounded-xl px-4 py-2 text-xs font-bold transition-all shrink-0 ${
+                  activeTab === "simulator"
+                    ? "bg-[#1c346c] text-white shadow-sm"
+                    : "bg-white text-[#526699] border border-[#E4E6EE] hover:text-[#1c346c]"
+                }`}
+              >
+                <Zap className="h-4 w-4" />
+                4. Pre-Spike Simulator
+              </button>
+
+              <button
+                onClick={() => setActiveTab("audit")}
+                className={`flex items-center gap-2 rounded-xl px-4 py-2 text-xs font-bold transition-all shrink-0 ${
+                  activeTab === "audit"
+                    ? "bg-[#1c346c] text-white shadow-sm"
+                    : "bg-white text-[#526699] border border-[#E4E6EE] hover:text-[#1c346c]"
+                }`}
+              >
+                <History className="h-4 w-4" />
+                5. Audit Trail
+              </button>
+            </div>
+
+            {/* Toggle Full Page View */}
+            <button
+              onClick={() => setActiveTab(activeTab === "all" ? "shield" : "all")}
+              className={`flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-semibold border transition-all shrink-0 ${
+                activeTab === "all"
+                  ? "bg-[#84bbe3]/30 text-[#1c346c] border-[#84bbe3]"
+                  : "bg-white text-[#526699] border-[#E4E6EE] hover:text-[#1c346c]"
+              }`}
+            >
+              <LayoutGrid className="h-3.5 w-3.5" />
+              {activeTab === "all" ? "Switch to Tabbed View" : "View All Sections (Full)"}
+            </button>
           </div>
 
-          {/* Pre-Promotion Warning / Velocity Spike Simulator */}
-          <PrePromotionSimulator
-            currentWeeklyVolume={cashFlow.trailing14dSales / 2}
-            currentRiskScore={score}
-          />
+          {/* TAB 1: Main Core Demo (Risk, AI Diagnosis, Cash Flow, Actions) */}
+          {(activeTab === "shield" || activeTab === "all") && (
+            <div className="space-y-6">
+              {/* Cash Flow Shield Section */}
+              <CashFlowShield cashFlow={cashFlow} band={band} />
 
-          {/* Orders & Underwriting Ledger */}
-          <OrdersTable
-            orders={orders}
-            onOpenAppealModal={handleOpenAppealModal}
-          />
+              {/* Core Risk Gauge & AI Diagnosis Grid */}
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                {/* Visual Risk Gauge (5 cols for better spacing) */}
+                <div className="lg:col-span-5">
+                  <RiskGauge
+                    score={score}
+                    band={band}
+                    evaluatedAt={evaluatedAt}
+                    history={scoreHistory}
+                  />
+                </div>
 
-          {/* Compliance Audit Trail & Webhook Telemetry */}
-          <AuditLogDrawer logs={auditLogs} />
+                {/* AI Diagnosis & Plain-Language Explanation (7 cols) */}
+                <div className="lg:col-span-7">
+                  <ExplanationPanel
+                    summary={explanation.summary}
+                    topReasons={explanation.topReasons}
+                    model={explanation.model}
+                    onSelectActionTab={() => {
+                      const el = document.getElementById("action-queue-section");
+                      if (el) el.scrollIntoView({ behavior: "smooth" });
+                    }}
+                  />
+                </div>
+              </div>
+
+              {/* AI Action Agent Queue (Approval-Gated) */}
+              <div id="action-queue-section">
+                <ActionQueue
+                  actions={actions}
+                  onApprove={handleApproveAction}
+                  onReject={handleRejectAction}
+                  onOpenAppealModal={handleOpenAppealModal}
+                />
+              </div>
+            </div>
+          )}
+
+          {/* TAB 2: 6 Documented Risk Signals Breakdown */}
+          {(activeTab === "signals" || activeTab === "all") && signals && (
+            <div className="space-y-6">
+              <SignalMeters signals={signals} />
+            </div>
+          )}
+
+          {/* TAB 3: Orders & Underwriting Ledger */}
+          {(activeTab === "orders" || activeTab === "all") && (
+            <div className="space-y-6">
+              <OrdersTable
+                orders={orders}
+                onOpenAppealModal={handleOpenAppealModal}
+              />
+            </div>
+          )}
+
+          {/* TAB 4: Pre-Promotion Warning / Velocity Spike Simulator */}
+          {(activeTab === "simulator" || activeTab === "all") && (
+            <div className="space-y-6">
+              <PrePromotionSimulator
+                currentWeeklyVolume={cashFlow.trailing14dSales / 2}
+                currentRiskScore={score}
+              />
+            </div>
+          )}
+
+          {/* TAB 5: Compliance Audit Trail & Webhook Telemetry */}
+          {(activeTab === "audit" || activeTab === "all") && (
+            <div className="space-y-6">
+              <AuditLogDrawer logs={auditLogs} />
+            </div>
+          )}
         </main>
       </div>
 
-      {/* Footer */}
-      <footer className="mt-16 border-t border-slate-900 bg-slate-950/80 py-6 text-center text-xs text-slate-400">
+      {/* Casper Light Footer */}
+      <footer className="mt-16 border-t border-[#E4E6EE] bg-white py-6 text-center text-xs text-[#526699]">
         <div className="mx-auto max-w-7xl px-4 flex flex-col sm:flex-row items-center justify-between gap-2">
-          <span>
+          <span className="text-[#1c346c] font-medium">
             <strong>Thaw</strong> — Early-warning & cash-flow shield built for PayPal sellers.
           </span>
-          <span className="text-[11px] text-slate-400">
+          <span className="text-xs text-[#64759d]">
             Open-source MIT License • PayPal AI Hackathon 2026
           </span>
         </div>
@@ -399,8 +581,11 @@ export default function DashboardPage() {
         onClose={() => setIsTourOpen(false)}
         onRunE2EProof={() => setIsE2EProofOpen(true)}
         onSelectActionQueue={() => {
-          const el = document.getElementById("action-queue-section");
-          if (el) el.scrollIntoView({ behavior: "smooth" });
+          setActiveTab("shield");
+          setTimeout(() => {
+            const el = document.getElementById("action-queue-section");
+            if (el) el.scrollIntoView({ behavior: "smooth" });
+          }, 100);
         }}
       />
 

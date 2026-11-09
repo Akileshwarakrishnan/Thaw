@@ -57,15 +57,17 @@ export function SignalMeters({ signals }: SignalMetersProps) {
   ];
 
   return (
-    <div className="glass-panel glass-panel-hover rounded-2xl p-6 space-y-5">
-      <div className="flex items-center justify-between border-b border-slate-800/80 pb-3">
+    <div className="casper-card casper-card-hover p-6 space-y-5">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-[#E4E6EE] pb-3 gap-2">
         <div className="flex items-center gap-2">
-          <SlidersHorizontal className="h-4 w-4 text-brand-400" />
-          <h3 className="text-base font-semibold text-white">
+          <div className="rounded-lg bg-[#84bbe3]/20 p-2 text-[#1c346c]">
+            <SlidersHorizontal className="h-4 w-4" />
+          </div>
+          <h3 className="text-base font-bold text-[#1c346c]">
             Deterministic Signal Breakdown & Trigger Weights
           </h3>
         </div>
-        <span className="text-[11px] text-slate-400">
+        <span className="text-xs text-[#526699] font-medium">
           6 Publicly Documented Underwriting Triggers (Sum = 100 pts)
         </span>
       </div>
@@ -78,16 +80,16 @@ export function SignalMeters({ signals }: SignalMetersProps) {
           const statusColor =
             data.status === "CRITICAL"
               ? {
-                  badge: "bg-rose-500/10 text-rose-400 border-rose-500/30",
-                  bar: "bg-rose-500",
+                  badge: "bg-rose-100 text-[#cc352c] border-rose-200",
+                  bar: "bg-[#cc352c]",
                 }
               : data.status === "ELEVATED"
               ? {
-                  badge: "bg-amber-500/10 text-amber-400 border-amber-500/30",
+                  badge: "bg-amber-100 text-amber-800 border-amber-200",
                   bar: "bg-amber-500",
                 }
               : {
-                  badge: "bg-emerald-500/10 text-emerald-400 border-emerald-500/30",
+                  badge: "bg-emerald-100 text-emerald-800 border-emerald-200",
                   bar: "bg-emerald-500",
                 };
 
@@ -96,16 +98,16 @@ export function SignalMeters({ signals }: SignalMetersProps) {
           return (
             <div
               key={key}
-              className="rounded-xl border border-slate-800/80 bg-slate-900/50 p-4 space-y-3 hover:border-slate-700 transition-colors flex flex-col justify-between"
+              className="rounded-xl border border-[#E4E6EE] bg-white p-4 space-y-3 hover:border-[#84bbe3] transition-colors flex flex-col justify-between shadow-xs"
             >
               <div className="space-y-3">
                 {/* Header */}
                 <div className="flex items-start justify-between gap-2">
                   <div>
-                    <h4 className="text-xs font-semibold text-white">
+                    <h4 className="text-xs font-bold text-[#1c346c]">
                       {data.name}
                     </h4>
-                    <span className="text-[10px] text-slate-400">
+                    <span className="text-[11px] text-[#526699]">
                       Weight: {data.weight} pts max
                     </span>
                   </div>
@@ -119,18 +121,18 @@ export function SignalMeters({ signals }: SignalMetersProps) {
                 {/* Metric & Points */}
                 <div className="flex items-baseline justify-between">
                   <div>
-                    <span className="text-lg font-bold text-white">
+                    <span className="text-xl font-extrabold text-[#1c346c]">
                       {data.displayValue}
                     </span>
-                    <span className="block text-[10px] text-slate-400">
+                    <span className="block text-[11px] text-[#64759d]">
                       Raw Metric
                     </span>
                   </div>
                   <div className="text-right">
-                    <span className="text-sm font-bold text-slate-200">
+                    <span className="text-sm font-extrabold text-[#1c346c]">
                       +{data.contribution.toFixed(1)}
                     </span>
-                    <span className="block text-[10px] text-slate-400">
+                    <span className="block text-[11px] text-[#526699]">
                       pts added
                     </span>
                   </div>
@@ -138,43 +140,43 @@ export function SignalMeters({ signals }: SignalMetersProps) {
 
                 {/* Progress Bar */}
                 <div className="space-y-1">
-                  <div className="h-1.5 w-full rounded-full bg-slate-800 overflow-hidden">
+                  <div className="h-2 w-full rounded-full bg-[#F0F5F7] overflow-hidden border border-[#E4E6EE]">
                     <div
                       className={`h-full rounded-full transition-all duration-700 ${statusColor.bar}`}
                       style={{ width: `${pct}%` }}
                     />
                   </div>
-                  <div className="flex justify-between text-[10px] text-slate-400">
-                    <span>Safe</span>
-                    <span>{pct}% Contribution</span>
+                  <div className="flex justify-between text-[11px] text-[#64759d]">
+                    <span>Safe (0)</span>
+                    <span>{pct}% Impact</span>
                   </div>
                 </div>
 
                 {/* Description */}
-                <p className="text-[11px] leading-relaxed text-slate-300 pt-1 border-t border-slate-800/60">
+                <p className="text-xs leading-relaxed text-[#526699] pt-1 border-t border-[#E4E6EE]">
                   {data.description}
                 </p>
               </div>
 
               {/* Public Documentation Evidence & Citation Link */}
               {evidence && (
-                <div className="mt-2 pt-2 border-t border-slate-800/80 rounded bg-slate-950/40 p-2 text-[10px] space-y-1">
-                  <div className="flex items-center justify-between text-slate-400">
-                    <span className="font-semibold text-slate-300 flex items-center gap-1">
-                      <BookOpen className="h-3 w-3 text-brand-400" />
+                <div className="mt-2 pt-2 border-t border-[#E4E6EE] rounded-lg bg-[#F0F5F7] p-2.5 text-[11px] space-y-1">
+                  <div className="flex items-center justify-between text-[#526699]">
+                    <span className="font-bold text-[#1c346c] flex items-center gap-1">
+                      <BookOpen className="h-3 w-3 text-[#4a4af4]" />
                       Public Trigger Rule:
                     </span>
                     <a
                       href={evidence.docUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-brand-400 hover:text-brand-300 flex items-center gap-0.5 font-medium"
+                      className="text-[#4a4af4] hover:text-[#1c346c] flex items-center gap-0.5 font-bold"
                       title="View official PayPal documentation"
                     >
-                      Docs <ExternalLink className="h-2.5 w-2.5" />
+                      Docs <ExternalLink className="h-3 w-3" />
                     </a>
                   </div>
-                  <p className="text-slate-400 italic leading-snug">
+                  <p className="text-[#526699] leading-snug">
                     {evidence.ruleSummary}
                   </p>
                 </div>

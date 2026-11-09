@@ -9,9 +9,7 @@ import {
   RotateCcw,
   MessageSquare,
   ShieldAlert,
-  Flame,
   ArrowDownRight,
-  Send,
   Sparkles,
 } from "lucide-react";
 
@@ -79,44 +77,44 @@ export function ActionQueue({
   const getActionIcon = (type: string) => {
     switch (type) {
       case "upload_tracking":
-        return <Truck className="h-4 w-4 text-brand-400" />;
+        return <Truck className="h-4 w-4 text-[#1c346c]" />;
       case "refund":
-        return <RotateCcw className="h-4 w-4 text-amber-400" />;
+        return <RotateCcw className="h-4 w-4 text-amber-600" />;
       case "draft_reply":
       case "appeal":
-        return <MessageSquare className="h-4 w-4 text-purple-400" />;
+        return <MessageSquare className="h-4 w-4 text-purple-600" />;
       default:
-        return <ShieldAlert className="h-4 w-4 text-rose-400" />;
+        return <ShieldAlert className="h-4 w-4 text-[#cc352c]" />;
     }
   };
 
   return (
-    <div className="glass-panel glass-panel-hover rounded-2xl p-6 space-y-4">
+    <div className="bg-white rounded-2xl p-6 border border-[#E4E6EE] shadow-sm hover:shadow-md transition-shadow space-y-4">
       {/* Header */}
-      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800/80 pb-3">
+      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[#E4E6EE] pb-3">
         <div className="flex items-center gap-2">
-          <div className="rounded-md bg-brand-500/10 p-1.5 text-brand-400 border border-brand-500/20">
-            <Sparkles className="h-4 w-4" />
+          <div className="rounded-lg bg-[#84bbe3]/20 p-2 text-[#1c346c]">
+            <Sparkles className="h-5 w-5" />
           </div>
           <div>
-            <h3 className="text-base font-semibold text-white">
-              AI Action Agent (Human-in-the-Loop Gated)
+            <h3 className="text-base font-bold text-[#1c346c]">
+              AI Action Agent (Human Approval-Gated)
             </h3>
-            <p className="text-[11px] text-slate-400">
-              The AI proposes remediations. Zero money or tracking moves without your explicit click.
+            <p className="text-xs text-[#526699]">
+              The AI proposes solutions. Zero money or tracking moves without your explicit approval.
             </p>
           </div>
         </div>
-        <span className="rounded-full bg-slate-800 px-3 py-1 text-xs font-semibold text-slate-300">
-          {actions.filter((a) => a.status === "proposed").length} Pending Approval
+        <span className="rounded-full bg-[#F0F5F7] border border-[#E4E6EE] px-3 py-1 text-xs font-bold text-[#1c346c]">
+          {actions.filter((a) => a.status === "proposed").length} Pending Actions
         </span>
       </div>
 
       {/* Action Items List */}
       <div className="space-y-3">
         {actions.length === 0 ? (
-          <div className="rounded-xl border border-dashed border-slate-800 p-8 text-center text-xs text-slate-400">
-            No active actions proposed. All order fulfillments and disputes are clear!
+          <div className="rounded-xl border border-dashed border-[#E4E6EE] p-8 text-center text-xs text-[#64759d]">
+            No actions currently required. All order shipments and disputes are in good standing!
           </div>
         ) : (
           actions.map((action) => {
@@ -130,57 +128,58 @@ export function ActionQueue({
                 key={action.id}
                 className={`rounded-xl border p-4 transition-all ${
                   isExecuted
-                    ? "border-emerald-500/30 bg-emerald-950/10"
+                    ? "border-emerald-300 bg-emerald-50/50"
                     : isRejected
-                    ? "border-slate-800 bg-slate-950/40 opacity-60"
-                    : "border-slate-800 bg-slate-900/60 hover:border-slate-700"
+                    ? "border-slate-200 bg-slate-50 opacity-60"
+                    : "border-[#E4E6EE] bg-white hover:border-[#84bbe3] shadow-xs"
                 }`}
               >
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
                   {/* Left: Icon & Title & Rationale */}
                   <div className="space-y-1.5 max-w-2xl">
                     <div className="flex flex-wrap items-center gap-2">
-                      <div className="flex items-center gap-1.5 rounded-lg bg-slate-800/80 px-2.5 py-1 text-xs font-medium text-slate-200">
+                      <div className="flex items-center gap-1.5 rounded-lg bg-[#F0F5F7] px-2.5 py-1 text-xs font-bold text-[#1c346c]">
                         {getActionIcon(action.type)}
                         <span className="capitalize">{action.type.replace(/_/g, " ")}</span>
                       </div>
 
-                      <span className="font-semibold text-white text-sm">
+                      <span className="font-bold text-[#1c346c] text-sm">
                         {action.title}
                       </span>
 
-                      {/* Execution Channel & Source Badges */}
-                      <span className="rounded bg-brand-500/10 px-2 py-0.5 text-[10px] font-semibold text-brand-300 border border-brand-500/20">
-                        {action.executionChannel === "REST_FALLBACK" ? "REST Client" : "PayPal Agent Toolkit"}
+                      {/* Execution Channel Badge */}
+                      <span className="rounded-full bg-blue-50 px-2 py-0.5 text-[10px] font-bold text-[#1c346c] border border-blue-200">
+                        {action.executionChannel === "REST_FALLBACK" ? "PayPal REST Client" : "PayPal Agent Toolkit (MCP)"}
                       </span>
 
+                      {/* Source Badge */}
                       <span
-                        className={`rounded px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wider border ${
+                        className={`rounded-full px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider border ${
                           action.source === "LIVE_SANDBOX"
-                            ? "bg-emerald-500/15 text-emerald-300 border-emerald-500/30"
-                            : "bg-slate-800 text-slate-400 border-slate-700"
+                            ? "bg-emerald-100 text-emerald-800 border-emerald-300"
+                            : "bg-slate-100 text-slate-700 border-slate-300"
                         }`}
                       >
                         {action.source === "LIVE_SANDBOX" ? "Live Sandbox" : "Simulated"}
                       </span>
 
                       {/* Expected Risk Drop */}
-                      <span className="flex items-center gap-0.5 rounded bg-emerald-500/10 px-2 py-0.5 text-[11px] font-bold text-emerald-400 border border-emerald-500/20">
+                      <span className="flex items-center gap-0.5 rounded-full bg-emerald-100 px-2 py-0.5 text-[11px] font-bold text-emerald-800">
                         <ArrowDownRight className="h-3 w-3" />
                         -{action.expectedRiskDrop} pts
                       </span>
                     </div>
 
-                    <p className="text-xs text-slate-300 leading-relaxed">
+                    <p className="text-xs text-[#526699] leading-relaxed font-normal">
                       {action.rationale}
                     </p>
 
                     {/* Target Context */}
-                    <div className="flex flex-wrap items-center gap-3 text-[11px] text-slate-400 pt-1">
+                    <div className="flex flex-wrap items-center gap-3 text-[11px] text-[#64759d] pt-1">
                       {action.order && (
                         <span>
                           Order:{" "}
-                          <strong className="text-slate-200">
+                          <strong className="text-[#1c346c]">
                             #{action.order.paypalOrderId}
                           </strong>{" "}
                           (${action.order.amount.toFixed(2)})
@@ -189,7 +188,7 @@ export function ActionQueue({
                       {action.dispute && (
                         <span>
                           Dispute:{" "}
-                          <strong className="text-slate-200">
+                          <strong className="text-[#1c346c]">
                             #{action.dispute.paypalDisputeId}
                           </strong>{" "}
                           ({action.dispute.reason})
@@ -198,7 +197,7 @@ export function ActionQueue({
                       {action.payload?.carrier && (
                         <span>
                           Carrier:{" "}
-                          <strong className="text-slate-200">
+                          <strong className="text-[#1c346c]">
                             {action.payload.carrier}
                           </strong>
                         </span>
@@ -209,14 +208,14 @@ export function ActionQueue({
                   {/* Right: Status & Action Buttons */}
                   <div className="flex items-center gap-2 self-end md:self-center shrink-0">
                     {isExecuted && (
-                      <span className="flex items-center gap-1 rounded-full bg-emerald-500/15 px-3 py-1 text-xs font-semibold text-emerald-300 border border-emerald-500/30">
-                        <CheckCircle className="h-3.5 w-3.5 text-emerald-400" />
-                        Executed & Synced
+                      <span className="flex items-center gap-1 rounded-full bg-emerald-100 px-3 py-1 text-xs font-bold text-emerald-800 border border-emerald-300">
+                        <CheckCircle className="h-3.5 w-3.5 text-emerald-600" />
+                        Executed & Synced to PayPal
                       </span>
                     )}
 
                     {isRejected && (
-                      <span className="flex items-center gap-1 rounded-full bg-slate-800 px-3 py-1 text-xs font-medium text-slate-400 border border-slate-700">
+                      <span className="flex items-center gap-1 rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-slate-600 border border-slate-300">
                         <XCircle className="h-3.5 w-3.5" />
                         Rejected
                       </span>
@@ -232,7 +231,7 @@ export function ActionQueue({
                                 action.order?.id
                               )
                             }
-                            className="rounded-lg border border-purple-500/40 bg-purple-500/10 px-3 py-1.5 text-xs font-semibold text-purple-300 hover:bg-purple-500/20 transition-colors"
+                            className="rounded-lg border border-purple-200 bg-purple-50 px-3 py-1.5 text-xs font-bold text-purple-700 hover:bg-purple-100 transition-colors shadow-xs"
                           >
                             Preview Rebuttal
                           </button>
@@ -241,7 +240,7 @@ export function ActionQueue({
                         <button
                           onClick={() => handleReject(action.id)}
                           disabled={isProcessing}
-                          className="rounded-lg border border-slate-700 bg-slate-800/80 px-3 py-1.5 text-xs font-medium text-slate-300 hover:bg-slate-700 transition-colors disabled:opacity-50"
+                          className="rounded-lg border border-[#E4E6EE] bg-white px-3 py-1.5 text-xs font-medium text-[#526699] hover:bg-slate-50 transition-colors disabled:opacity-50"
                         >
                           Reject
                         </button>
@@ -249,7 +248,7 @@ export function ActionQueue({
                         <button
                           onClick={() => handleApprove(action.id)}
                           disabled={isProcessing}
-                          className="flex items-center gap-1.5 rounded-lg bg-emerald-600 px-3.5 py-1.5 text-xs font-bold text-white shadow-md hover:bg-emerald-500 transition-colors disabled:opacity-50"
+                          className="flex items-center gap-1.5 rounded-lg bg-emerald-600 px-4 py-1.5 text-xs font-bold text-white shadow-sm hover:bg-emerald-500 transition-colors disabled:opacity-50"
                         >
                           {isProcessing ? (
                             <Clock className="h-3.5 w-3.5 animate-spin" />
