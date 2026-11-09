@@ -530,9 +530,9 @@ export default function DashboardPage() {
             <Image
               src="/thaw-logo.png"
               alt="THAW"
-              width={80}
-              height={26}
-              className="object-contain"
+              width={70}
+              height={30}
+              className="h-6 w-auto object-contain"
             />
             <span className="text-[#1f2328] font-semibold">
               — Early-warning & cash-flow shield built for PayPal sellers.
