@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import {
   Package,
   Search,
@@ -49,6 +49,11 @@ export function OrdersTable({ orders, onOpenAppealModal }: OrdersTableProps) {
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
 
+  // Automatically reset to page 1 whenever orders data or active filter changes
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [orders, filterTab]);
+
   // Filter orders
   const filteredOrders = useMemo(() => {
     return orders.filter((order) => {
@@ -69,14 +74,29 @@ export function OrdersTable({ orders, onOpenAppealModal }: OrdersTableProps) {
     });
   }, [orders, filterTab, searchQuery]);
 
-  // Reset page when filter or search changes
+  // Total pages
   const totalPages = Math.max(1, Math.ceil(filteredOrders.length / PAGE_SIZE));
-  const safeCurrentPage = Math.min(currentPage, totalPages);
+  const safeCurrentPage = Math.min(Math.max(1, currentPage), totalPages);
 
   const paginatedOrders = useMemo(() => {
     const start = (safeCurrentPage - 1) * PAGE_SIZE;
     return filteredOrders.slice(start, start + PAGE_SIZE);
   }, [filteredOrders, safeCurrentPage]);
+
+  // Compute smart visible pages list (handles 1..N pages without overflowing)
+  const visiblePages = useMemo(() => {
+    if (totalPages <= 7) {
+      return Array.from({ length: totalPages }, (_, i) => i + 1);
+    }
+    const pages: (number | string)[] = [1];
+    const start = Math.max(2, safeCurrentPage - 1);
+    const end = Math.min(totalPages - 1, safeCurrentPage + 1);
+    if (start > 2) pages.push("...");
+    for (let i = start; i <= end; i++) pages.push(i);
+    if (end < totalPages - 1) pages.push("...");
+    pages.push(totalPages);
+    return pages;
+  }, [totalPages, safeCurrentPage]);
 
   const handleTabChange = (tab: "all" | "missing_tracking" | "mismatch" | "disputed") => {
     setFilterTab(tab);
@@ -178,7 +198,7 @@ export function OrdersTable({ orders, onOpenAppealModal }: OrdersTableProps) {
           <tbody className="divide-y divide-[#d4d7dc] font-normal bg-white">
             {paginatedOrders.length === 0 ? (
               <tr>
-                <td colSpan={7} className="py-12 text-center text-[#535963]">
+                <td colSpan={7} className="py-16 text-center text-[#535963]">
                   No orders match your current filter or query.
                 </td>
               </tr>
@@ -280,7 +300,7 @@ export function OrdersTable({ orders, onOpenAppealModal }: OrdersTableProps) {
         </table>
       </div>
 
-      {/* Pagination Bar (Clean, professional, not clumbled) */}
+      {/* Pagination Bar (Smart, elegant, zero-clutter) */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-2">
         <div className="text-xs text-[#535963]">
           Showing{" "}
@@ -305,19 +325,29 @@ export function OrdersTable({ orders, onOpenAppealModal }: OrdersTableProps) {
           </button>
 
           <div className="flex items-center gap-1">
-            {Array.from({ length: totalPages }, (_, idx) => idx + 1).map((p) => (
-              <button
-                key={p}
-                onClick={() => setCurrentPage(p)}
-                className={`h-7 w-7 rounded-full text-xs font-semibold transition-all ${
-                  p === safeCurrentPage
-                    ? "bg-[#1f2328] text-white shadow-xs font-bold"
-                    : "text-[#535963] hover:bg-[#f6f6f6] hover:text-[#1f2328]"
-                }`}
-              >
-                {p}
-              </button>
-            ))}
+            {visiblePages.map((pageItem, idx) => {
+              if (pageItem === "...") {
+                return (
+                  <span key={`ellipsis-${idx}`} className="px-1 text-xs text-[#535963]">
+                    ...
+                  </span>
+                );
+              }
+              const pNum = Number(pageItem);
+              return (
+                <button
+                  key={pNum}
+                  onClick={() => setCurrentPage(pNum)}
+                  className={`h-7 w-7 rounded-full text-xs font-semibold transition-all ${
+                    pNum === safeCurrentPage
+                      ? "bg-[#1f2328] text-white shadow-xs font-bold"
+                      : "text-[#535963] hover:bg-[#f6f6f6] hover:text-[#1f2328]"
+                  }`}
+                >
+                  {pNum}
+                </button>
+              );
+            })}
           </div>
 
           <button
