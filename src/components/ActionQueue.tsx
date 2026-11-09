@@ -23,6 +23,8 @@ export interface ActionItem {
   priority: number;
   expectedRiskDrop: number;
   status: "proposed" | "approved" | "rejected" | "executed" | "failed";
+  source?: "LIVE_SANDBOX" | "SIMULATED";
+  executionChannel?: string;
   payload: Record<string, any>;
   createdAt: string;
   order?: {
@@ -145,6 +147,21 @@ export function ActionQueue({
 
                       <span className="font-semibold text-white text-sm">
                         {action.title}
+                      </span>
+
+                      {/* Execution Channel & Source Badges */}
+                      <span className="rounded bg-brand-500/10 px-2 py-0.5 text-[10px] font-semibold text-brand-300 border border-brand-500/20">
+                        {action.executionChannel === "REST_FALLBACK" ? "REST Client" : "PayPal Agent Toolkit"}
+                      </span>
+
+                      <span
+                        className={`rounded px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wider border ${
+                          action.source === "LIVE_SANDBOX"
+                            ? "bg-emerald-500/15 text-emerald-300 border-emerald-500/30"
+                            : "bg-slate-800 text-slate-400 border-slate-700"
+                        }`}
+                      >
+                        {action.source === "LIVE_SANDBOX" ? "Live Sandbox" : "Simulated"}
                       </span>
 
                       {/* Expected Risk Drop */}

@@ -30,6 +30,7 @@ export interface OrderRow {
   trackingStatus: string;
   sellerProtectionStatus: string;
   refundedAmount: number;
+  source?: "LIVE_SANDBOX" | "SIMULATED";
   hasDispute: boolean;
   disputes: any[];
 }
@@ -161,12 +162,23 @@ export function OrdersTable({ orders, onOpenAppealModal }: OrdersTableProps) {
                   className="hover:bg-slate-900/40 transition-colors"
                 >
                   <td className="py-3 px-3 font-semibold text-white">
-                    #{order.paypalOrderId}
-                    {order.hasDispute && (
-                      <span className="ml-2 rounded bg-purple-500/20 px-1.5 py-0.5 text-[10px] font-bold text-purple-300 border border-purple-500/30">
-                        Disputed
+                    <div className="flex items-center gap-1.5 flex-wrap">
+                      <span>#{order.paypalOrderId}</span>
+                      <span
+                        className={`rounded px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wider border ${
+                          order.source === "LIVE_SANDBOX"
+                            ? "bg-emerald-500/15 text-emerald-300 border-emerald-500/30"
+                            : "bg-slate-800 text-slate-400 border-slate-700"
+                        }`}
+                      >
+                        {order.source === "LIVE_SANDBOX" ? "Live Sandbox" : "Simulated"}
                       </span>
-                    )}
+                      {order.hasDispute && (
+                        <span className="rounded bg-purple-500/20 px-1.5 py-0.5 text-[10px] font-bold text-purple-300 border border-purple-500/30">
+                          Disputed
+                        </span>
+                      )}
+                    </div>
                   </td>
                   <td className="py-3 px-3 text-slate-400">
                     {new Date(order.createdAt).toLocaleDateString([], {

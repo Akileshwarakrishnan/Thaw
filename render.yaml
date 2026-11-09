@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: thaw
+    env: node
+    plan: free
+    buildCommand: npm install && npx prisma db push && npm run build && npm run seed
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PAYPAL_ENV
+        value: sandbox
+      - key: DEMO_MODE
+        value: "true"
+      - key: DATABASE_URL
+        value: "file:./prisma/dev.db"
+      - key: APP_BASE_URL
+        fromService:
+          type: web
+          name: thaw
+          property: host

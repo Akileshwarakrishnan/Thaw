@@ -22,6 +22,8 @@ export async function GET() {
         priority: a.priority,
         expectedRiskDrop: a.expectedRiskDrop,
         status: a.status,
+        source: a.source,
+        executionChannel: a.executionChannel,
         payload: JSON.parse(a.payloadJson || "{}"),
         createdAt: a.createdAt,
         order: a.order

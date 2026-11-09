@@ -11,6 +11,7 @@ import {
   AlertTriangle,
   Flame,
   Store,
+  Sparkles,
 } from "lucide-react";
 
 interface HeaderProps {
@@ -20,6 +21,8 @@ interface HeaderProps {
   onSync: () => void;
   onSimulateWebhook: () => void;
   onOpenConnectModal: () => void;
+  onOpenTour: () => void;
+  onOpenE2EProof: () => void;
   isSyncing: boolean;
   isSwitching: boolean;
 }
@@ -31,6 +34,8 @@ export function Header({
   onSync,
   onSimulateWebhook,
   onOpenConnectModal,
+  onOpenTour,
+  onOpenE2EProof,
   isSyncing,
   isSwitching,
 }: HeaderProps) {
@@ -106,14 +111,32 @@ export function Header({
         </div>
 
         {/* Action Controls */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 flex-wrap">
+          <button
+            onClick={onOpenTour}
+            className="flex items-center gap-1.5 rounded-lg border border-purple-500/40 bg-purple-500/15 px-3 py-1.5 text-xs font-semibold text-purple-300 hover:bg-purple-500/25 transition-colors shadow-sm"
+            title="Open 30-Second Guided Tour for Judges"
+          >
+            <Sparkles className="h-3.5 w-3.5 text-purple-400" />
+            30s Tour
+          </button>
+
+          <button
+            onClick={onOpenE2EProof}
+            className="flex items-center gap-1.5 rounded-lg border border-emerald-500/40 bg-emerald-500/15 px-3 py-1.5 text-xs font-semibold text-emerald-300 hover:bg-emerald-500/25 transition-colors shadow-sm"
+            title="Execute Real 5-Step Sandbox Verification Cycle"
+          >
+            <Shield className="h-3.5 w-3.5 text-emerald-400" />
+            PayPal Proof
+          </button>
+
           <button
             onClick={onSimulateWebhook}
-            className="flex items-center gap-1.5 rounded-lg border border-slate-700 bg-slate-900/80 px-3 py-1.5 text-xs font-medium text-slate-300 hover:border-brand-500/50 hover:bg-slate-800 transition-colors"
+            className="flex items-center gap-1.5 rounded-lg border border-slate-700 bg-slate-900/80 px-2.5 py-1.5 text-xs font-medium text-slate-300 hover:border-brand-500/50 hover:bg-slate-800 transition-colors"
             title="Simulate incoming PayPal webhook"
           >
             <Zap className="h-3.5 w-3.5 text-amber-400" />
-            Simulate Webhook
+            Webhook
           </button>
 
           <button

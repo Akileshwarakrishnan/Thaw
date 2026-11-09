@@ -8,9 +8,10 @@ interface RiskGaugeProps {
   score: number;
   band: RiskBand;
   evaluatedAt: string;
+  history?: number[];
 }
 
-export function RiskGauge({ score, band, evaluatedAt }: RiskGaugeProps) {
+export function RiskGauge({ score, band, evaluatedAt, history }: RiskGaugeProps) {
   // SVG gauge calculations (semi-circle arc)
   const radius = 80;
   const circumference = Math.PI * radius; // 180 degrees arc
@@ -112,6 +113,29 @@ export function RiskGauge({ score, band, evaluatedAt }: RiskGaugeProps) {
           {bandColors.description}
         </p>
       </div>
+
+      {/* Score History Sparkline Trend */}
+      {history && history.length > 1 && (
+        <div className="w-full mt-3 rounded-lg bg-slate-900/60 p-2 border border-slate-800 text-[11px] text-slate-400 flex items-center justify-between">
+          <span className="font-semibold text-slate-300">History:</span>
+          <div className="flex items-center gap-1 font-mono">
+            {history.map((s, idx) => (
+              <React.Fragment key={idx}>
+                {idx > 0 && <span className="text-slate-600">→</span>}
+                <span
+                  className={
+                    idx === history.length - 1
+                      ? `font-bold ${bandColors.text}`
+                      : "text-slate-400"
+                  }
+                >
+                  {s}
+                </span>
+              </React.Fragment>
+            ))}
+          </div>
+        </div>
+      )}
 
       {/* Bands Scale Legend */}
       <div className="w-full mt-4 pt-3 border-t border-slate-800/80 grid grid-cols-3 text-[11px] text-slate-400">

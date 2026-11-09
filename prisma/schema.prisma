@@ -37,11 +37,13 @@ model Order {
   trackingStatus         String           @default("NONE") // NONE, SHIPPED, DELIVERED
   sellerProtectionStatus String           @default("ELIGIBLE") // ELIGIBLE, PARTIALLY_ELIGIBLE, NOT_ELIGIBLE
   refundedAmount         Float            @default(0.0)
+  source                 String           @default("SIMULATED") // LIVE_SANDBOX or SIMULATED
   disputes               Dispute[]
   proposedActions        ProposedAction[]
 
   @@index([sellerId])
   @@index([createdAt])
+  @@index([source])
 }
 
 model Dispute {
@@ -56,10 +58,12 @@ model Dispute {
   openedAt        DateTime         @default(now())
   responseDueAt   DateTime
   buyerNotes      String?
+  source          String           @default("SIMULATED") // LIVE_SANDBOX or SIMULATED
   proposedActions ProposedAction[]
 
   @@index([orderId])
   @@index([status])
+  @@index([source])
 }
 
 model RiskSnapshot {
@@ -102,11 +106,14 @@ model ProposedAction {
   priority         Int        @default(1)
   expectedRiskDrop Int        @default(5)
   status           String     @default("proposed") // proposed, approved, rejected, executed, failed
+  source           String     @default("SIMULATED") // LIVE_SANDBOX or SIMULATED
+  executionChannel String     @default("PAYPAL_AGENT_TOOLKIT") // PAYPAL_AGENT_TOOLKIT or REST_FALLBACK
   createdAt        DateTime   @default(now())
   approvals        Approval[]
 
   @@index([status])
   @@index([type])
+  @@index([source])
 }
 
 model Approval {
@@ -138,6 +145,8 @@ model WebhookEvent {
   payload       String
   processedAt   DateTime @default(now())
   status        String   @default("processed") // processed, failed, ignored
+  source        String   @default("SIMULATED") // LIVE_SANDBOX or SIMULATED
 
   @@index([paypalEventId])
+  @@index([source])
 }

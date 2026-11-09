@@ -44,6 +44,7 @@ export async function GET(request: NextRequest) {
         trackingStatus: o.trackingStatus,
         sellerProtectionStatus: o.sellerProtectionStatus,
         refundedAmount: o.refundedAmount,
+        source: o.source,
         hasDispute: o.disputes.length > 0,
         disputes: o.disputes,
       })),

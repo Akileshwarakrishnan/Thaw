@@ -15,7 +15,8 @@
     "db:generate": "prisma generate",
     "db:seed": "node --loader ts-node/esm scripts/seed.ts",
     "seed": "tsx scripts/seed.ts",
-    "paypal:check": "tsx scripts/paypal-check.ts"
+    "paypal:check": "tsx scripts/paypal-check.ts",
+    "paypal:e2e": "tsx scripts/sandbox-e2e.ts"
   },
   "dependencies": {
     "@prisma/client": "^5.21.1",

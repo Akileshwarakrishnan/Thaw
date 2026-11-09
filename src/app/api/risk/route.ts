@@ -78,6 +78,15 @@ export async function GET() {
       ? JSON.parse(snapshot.explanation.topReasonsJson)
       : [];
 
+    // Query recent snapshots for score history
+    const recentSnapshots = await prisma.riskSnapshot.findMany({
+      where: { sellerId: snapshot.sellerId },
+      orderBy: { computedAt: "desc" },
+      take: 4,
+      select: { score: true },
+    });
+    const history = recentSnapshots.reverse().map((s) => s.score);
+
     return NextResponse.json({
       success: true,
       snapshot: {
@@ -85,6 +94,7 @@ export async function GET() {
         score: snapshot.score,
         band: snapshot.band,
         computedAt: snapshot.computedAt,
+        history,
         cashFlow: {
           available: snapshot.cashAvailable,
           atRisk: snapshot.cashAtRisk,
