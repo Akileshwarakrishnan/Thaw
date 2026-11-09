@@ -1,0 +1,143 @@
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Seller {
+  id               String         @id @default(cuid())
+  paypalMerchantId String         @unique
+  displayName      String
+  connectedAt      DateTime       @default(now())
+  sandboxMode      Boolean        @default(true)
+  orders           Order[]
+  riskSnapshots    RiskSnapshot[]
+}
+
+model Order {
+  id                     String           @id @default(cuid())
+  sellerId               String
+  seller                 Seller           @relation(fields: [sellerId], references: [id], onDelete: Cascade)
+  paypalOrderId          String           @unique
+  captureId              String?
+  amount                 Float
+  currency               String           @default("USD")
+  createdAt              DateTime         @default(now())
+  buyerEmail             String
+  buyerName              String?
+  shipToAddress          String
+  transactionAddress     String
+  isAddressMismatch      Boolean          @default(false)
+  shippedAt              DateTime?
+  trackingNumber         String?
+  carrier                String?
+  trackingStatus         String           @default("NONE") // NONE, SHIPPED, DELIVERED
+  sellerProtectionStatus String           @default("ELIGIBLE") // ELIGIBLE, PARTIALLY_ELIGIBLE, NOT_ELIGIBLE
+  refundedAmount         Float            @default(0.0)
+  disputes               Dispute[]
+  proposedActions        ProposedAction[]
+
+  @@index([sellerId])
+  @@index([createdAt])
+}
+
+model Dispute {
+  id              String           @id @default(cuid())
+  paypalDisputeId String           @unique
+  orderId         String
+  order           Order            @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  reason          String           // MERCHANDISE_OR_SERVICE_NOT_RECEIVED, MERCHANDISE_OR_SERVICE_NOT_AS_DESCRIBED, UNAUTHORISED, etc.
+  status          String           // OPEN, UNDER_REVIEW, RESOLVED, WAITING_FOR_SELLER
+  amount          Float
+  currency        String           @default("USD")
+  openedAt        DateTime         @default(now())
+  responseDueAt   DateTime
+  buyerNotes      String?
+  proposedActions ProposedAction[]
+
+  @@index([orderId])
+  @@index([status])
+}
+
+model RiskSnapshot {
+  id                   String        @id @default(cuid())
+  sellerId             String
+  seller               Seller        @relation(fields: [sellerId], references: [id], onDelete: Cascade)
+  computedAt           DateTime      @default(now())
+  score                Int           // 0 to 100
+  band                 String        // LOW, MEDIUM, HIGH
+  signalsJson          String        // Serialized JSON with all 6 signal details
+  cashAvailable        Float         // Cleared balance
+  cashAtRisk           Float         // Estimated at risk
+  expectedReleaseDays  Int           // Estimated days to release
+  explanation          Explanation?
+
+  @@index([sellerId])
+  @@index([computedAt])
+}
+
+model Explanation {
+  id             String       @id @default(cuid())
+  snapshotId     String       @unique
+  snapshot       RiskSnapshot @relation(fields: [snapshotId], references: [id], onDelete: Cascade)
+  text           String
+  topReasonsJson String       // Array of top 3 contributing reasons
+  model          String       @default("thaw-ai-gemini")
+  createdAt      DateTime     @default(now())
+}
+
+model ProposedAction {
+  id               String     @id @default(cuid())
+  title            String?
+  type             String     // upload_tracking, refund, draft_reply, appeal, pre_notify_spike
+  orderId          String?
+  order            Order?     @relation(fields: [orderId], references: [id], onDelete: SetNull)
+  disputeId        String?
+  dispute          Dispute?   @relation(fields: [disputeId], references: [id], onDelete: SetNull)
+  payloadJson      String     // parameters for execution
+  rationale        String
+  priority         Int        @default(1)
+  expectedRiskDrop Int        @default(5)
+  status           String     @default("proposed") // proposed, approved, rejected, executed, failed
+  createdAt        DateTime   @default(now())
+  approvals        Approval[]
+
+  @@index([status])
+  @@index([type])
+}
+
+model Approval {
+  id              String         @id @default(cuid())
+  actionId        String
+  action          ProposedAction @relation(fields: [actionId], references: [id], onDelete: Cascade)
+  approvedBy      String         @default("seller")
+  decidedAt       DateTime       @default(now())
+  decision        String         // approved, rejected
+  executionResult String?        // JSON response or error details
+
+  @@index([actionId])
+}
+
+model AuditLog {
+  id          String   @id @default(cuid())
+  timestamp   DateTime @default(now())
+  actor       String   // system, ai, seller
+  event       String   // e.g. "SCORE_COMPUTED", "ACTION_APPROVED", "ACTION_EXECUTED", "WEBHOOK_PROCESSED"
+  detailsJson String
+
+  @@index([timestamp])
+}
+
+model WebhookEvent {
+  id            String   @id @default(cuid())
+  paypalEventId String   @unique // For deduplication & idempotency
+  eventType     String
+  payload       String
+  processedAt   DateTime @default(now())
+  status        String   @default("processed") // processed, failed, ignored
+
+  @@index([paypalEventId])
+}
