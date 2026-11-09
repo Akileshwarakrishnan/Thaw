@@ -3,73 +3,109 @@
 @tailwind utilities;
 
 :root {
-  --color-ui-colors-background-neutral-2: #F0F5F7;
-  --color-brand-navy: #1c346c;
-  --color-brand-ice: #84bbe3;
-  --color-brand-slate: #64759d;
-  --color-brand-frost: #a2b4cc;
-  --color-brand-alert: #cc352c;
-  --background: #F0F5F7;
-  --foreground: #0c0c14;
+  --color-gray: #d4d7dc;
+  --color-white: #ffffff;
+  --font-family-body: 'Geist', Helvetica, 'Segoe UI', Arial, sans-serif;
+  --color-background: #f6f6f6;
+  --color-light-blue: #e5f0ff;
+  --color-black: #1f2328;
+  --color-input-border: #d4d7dc;
+  --color-blue: #367eed;
+  --color-dark-blue: #1b63d2;
+  --color-medium-blue: #accfff;
+  --color-soft-white: #ededed;
+  --color-dark-gray: #343941;
+  --color-text-primary: #1f2328;
+  --color-text-secondary: #535963;
+  --border-button-radius: 30px;
+  --border-standard-radius: 10px;
+  --shadow-regular: 0 0 20px rgba(27, 37, 40, 0.05);
+  --background: #f6f6f6;
+  --foreground: #1f2328;
 }
 
 body {
-  color: #0c0c14;
-  background-color: #F0F5F7;
+  color: var(--color-text-primary);
+  background-color: var(--color-background);
   min-height: 100vh;
   font-feature-settings: "cv02", "cv03", "cv04", "cv11";
-  background-image: radial-gradient(at 0% 0%, rgba(132, 187, 227, 0.18) 0px, transparent 50%),
-                    radial-gradient(at 100% 0%, rgba(28, 52, 108, 0.08) 0px, transparent 50%);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* Casper-inspired cards: clean, airy, gentle shadows on crisp white */
-.casper-card {
-  background: #FFFFFF;
-  border: 1px solid #E4E6EE;
-  box-shadow: 0 4px 20px rgba(28, 52, 108, 0.06), 0 1px 3px rgba(28, 52, 108, 0.03);
-  border-radius: 16px;
+/* Statsig Card: 10px radius, clean white, hairline subtle border */
+.statsig-card {
+  background: #ffffff;
+  border: 1px solid #d4d7dc;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(27, 37, 40, 0.04);
 }
 
-.casper-card-hover {
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+.statsig-card-hover {
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.casper-card-hover:hover {
-  border-color: #84bbe3;
-  box-shadow: 0 12px 35px rgba(28, 52, 108, 0.10);
-  transform: translateY(-2px);
+.statsig-card-hover:hover {
+  border-color: #accfff;
+  box-shadow: 0 8px 30px rgba(27, 37, 40, 0.08);
 }
 
-/* Backward compatibility for existing class names */
-.glass-panel {
-  background: #FFFFFF;
-  border: 1px solid #E4E6EE;
-  box-shadow: 0 4px 20px rgba(28, 52, 108, 0.06);
-  border-radius: 16px;
+/* Backward compatibility for previous classes */
+.casper-card, .glass-panel {
+  background: #ffffff;
+  border: 1px solid #d4d7dc;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(27, 37, 40, 0.04);
 }
 
-.glass-panel-hover {
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+.casper-card-hover, .glass-panel-hover {
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.glass-panel-hover:hover {
-  border-color: #84bbe3;
-  box-shadow: 0 12px 35px rgba(28, 52, 108, 0.10);
-  transform: translateY(-2px);
+.casper-card-hover:hover, .glass-panel-hover:hover {
+  border-color: #accfff;
+  box-shadow: 0 8px 30px rgba(27, 37, 40, 0.08);
+}
+
+/* Statsig Pill Buttons */
+.statsig-btn-primary {
+  background-color: #1f2328;
+  color: #ffffff;
+  border-radius: 30px;
+  font-weight: 600;
+  transition: background-color 0.15s ease;
+}
+
+.statsig-btn-primary:hover {
+  background-color: #343941;
+}
+
+.statsig-btn-secondary {
+  background-color: #ffffff;
+  color: #1f2328;
+  border: 1px solid #d4d7dc;
+  border-radius: 30px;
+  font-weight: 600;
+  transition: all 0.15s ease;
+}
+
+.statsig-btn-secondary:hover {
+  background-color: #f6f6f6;
+  border-color: #367eed;
 }
 
 /* Custom scrollbars */
 ::-webkit-scrollbar {
-  width: 7px;
-  height: 7px;
+  width: 6px;
+  height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #F0F5F7;
+  background: #f6f6f6;
 }
 ::-webkit-scrollbar-thumb {
-  background: #a2b4cc;
+  background: #d4d7dc;
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #64759d;
+  background: #accfff;
 }

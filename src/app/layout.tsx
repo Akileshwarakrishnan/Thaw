@@ -1,10 +1,15 @@
 import type { Metadata } from "next";
+import { GeistSans } from "geist/font/sans";
+import { GeistMono } from "geist/font/mono";
 import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Thaw — Early-Warning & Cash-Flow Shield for PayPal Sellers",
   description:
     "Know before PayPal freezes your money. Deterministic hold-risk scoring, plain-language AI explanation, approval-gated actions, and cash-flow forecasting.",
+  icons: {
+    icon: "/thaw-logo.png",
+  },
 };
 
 export default function RootLayout({
@@ -13,11 +18,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" className={`${GeistSans.variable} ${GeistMono.variable}`}>
       <head>
-        <link rel="icon" href="/favicon.ico" sizes="any" />
+        <link rel="icon" href="/thaw-logo.png" sizes="any" />
       </head>
-      <body className="antialiased selection:bg-[#84bbe3] selection:text-[#1c346c] text-[#0c0c14] bg-[#F0F5F7]">
+      <body className="font-sans antialiased text-[#1f2328] bg-[#f6f6f6] selection:bg-[#accfff] selection:text-[#0b3679]">
         {children}
       </body>
     </html>

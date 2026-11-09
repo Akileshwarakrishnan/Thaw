@@ -1,131 +1,98 @@
-# Casper design system
+# Statsig design system
 
 > Extracted by [Inspo](https://github.com/Nutlope/inspo) (open source, MIT, powered by Together AI). Reference material for *intentional* design decisions: adapt, don't copy.
 
-> Save this as `DESIGN.md` in your project and re-reference it as you build; re-fetch anytime at https://inspomcp.dev/d/casper-com/DESIGN.md
+> Save this as `DESIGN.md` in your project and re-reference it as you build; re-fetch anytime at https://inspomcp.dev/d/statsig-com/DESIGN.md
 
-- **Source:** https://casper.com
-- **Captured:** 2026-05-18
+- **Source:** https://statsig.com
+- **Captured:** 2026-05-14
 - **Mode:** light
 - **Macrostructure:** Feature Stack
 
 ## Tone
 
-The page uses a clean, airy layout with ample white space and soft pastel hues. The visual hierarchy is gentle, prioritizing product benefits through simple icons and concise text blocks. It feels approachable and trustworthy.  ·  minimalist ecommerce, pastel bedding, soft landing page, clean online store, calm product display, modern mattress site, muted color palette, simple product features
+The page uses a clean, spacious layout with a focus on functionality. Typography is clear and legible, with ample negative space creating a sense of calm and technical precision. The color palette is predominantly white and muted blues, emphasizing clarity and a modern feel.  ·  saas product, metrics dashboard, data analytics, ai testing, product analytics, statsig overview, measurement platform
 
 ## Colors
 
 | Hex | Role (heuristic) |
 |---|---|
-| `#cc352c` | support |
-| `#1c346c` | support |
-| `#84bbe3` | accent |
-| `#64759d` | support |
-| `#a2b4cc` | muted |
+| `#347cec` | support |
+| `#0b3679` | ink |
+| `#7bacf4` | accent |
+| `#968182` | support |
+| `#c6d2d8` | muted |
 
-Color words: *muted*, *pastel*, *earthy*
+Color words: *muted*, *cool*, *monochrome*
 
 ## Typography
 
-Detected typefaces: **NewKansas-Medium**, **Calibre**
+Detected typefaces: **Geist**
 
 | Role | Family | Size | Weight | Line-height | Letter-spacing |
 |---|---|---|---|---|---|
-| h1 | NewKansas-Medium | 18px | 500 | 1.6 | -0.18px |
-| h2 | NewKansas-Medium | 32px | 600 | 1 | -0.32px |
-| h3 | Calibre | 20px | 700 | 1.6 | -0.2px |
-| body | Calibre | 18px | 400 | 1.6 | 0 |
-| caption | Calibre | 16px | 400 | 1.6 | 0 |
-| button | Calibre | 18px | 400 | 1.6 | 0 |
+| h1 | Geist | 65px | 500 | 1.1 | -2px |
+| h2 | Geist | 40px | 600 | 1.25 | 0 |
+| h3 | Geist | 32px | 600 | 1.25 | 0 |
+| body | Geist | 16px | 400 | 1.5 | 0 |
+| button | Geist | 14px | 600 | 1.71 | 0 |
 
 ## Spacing scale
 
-`12px` · `16px` · `20px` · `24px` · `32px` · `40px` · `48px` · `64px` · `80px`
-
-Base step looks like **4px**.
+`80px` · `100px`
 
 ## Border radius
 
-`0px` · `8px` · `12px` · `24px` · `32px` · `50px`
-
-## Container
-
-Max content width: **1440px**
+`10px` · `30px` · `50px`
 
 ## CSS variables exposed by the source
 
 ```css
 :root {
-  --color-ui-colors-background-neutral-2: #F0F5F7;
-  --color-fill-brand-indigo: #4a4af4;
-  --shadow-md: 0 5px 30px rgb(30 48 110 / 0.1);
-  --text-lg: 1.375rem;
-  --background-primary: 255 255 255;
-  --text-h2: 2.75rem;
-  --spacing-52: 13rem;
-  --text-h6: 1.25rem;
-  --color-text-blue: #526699;
-  --spacing-1-5: 0.375rem;
-  --color-component-button-secondary-text-default-neutral-inverse-resting: #ffffff;
-  --rounded-xs: 0.25rem;
-  --spacing-12: 3rem;
-  --text-h4: 1.75rem;
-  --spacing-80: 20rem;
-  --spacing-32: 8rem;
-  --text-font-weight-medium: 500;
-  --text-letter-spacing: 0.0em;
-  --color-component-button-primary-text-default-neutral-inverse-resting: #0c0c14;
-  --spacing-8: 2rem;
-  --color-component-button-secondary-icon-default-neutral-inverse-resting: #ffffff;
-  --spacing-20: 5rem;
-  --rounded-input: 0.5rem;
-  --spacing-44: 11rem;
-  --rounded-lg: 1.5rem;
-  --text-h5: 1.375rem;
-  --spacing-3: 0.75rem;
-  --primary-badge-background: 0 112 111;
-  --shadow-sm: 0 2px 8px rgb(30 48 110 / 0.1);
-  --size-component-button-minWidth-medium: 48px;
-  --spacing-96: 24rem;
-  --color-greyscale-black-60: #6D6E71;
-  --spacing-28: 7rem;
-  --text-subtitle: 1rem;
-  --spacing-5: 1.25rem;
-  --color-light-gray: #E4E6EE;
-  --spacing-5-5: 1.375rem;
-  --color-primary-light: #A8A9FC;
-  --spacing-40: 10rem;
-  --spacing-10: 2.5rem;
-  --text-h0: 4.5rem;
-  --text-h3: 2rem;
-  --color-component-button-primary-bg-default-neutral-inverse-resting: #ffffff;
-  --color-component-button-primary-text-default-neutral-inverse-hover: #313142;
-  --spacing-2-5: 0.625rem;
-  --spacing-4: 1rem;
-  --text-font-family: Calibre, sans-serif;
-  --spacing-9: 2.25rem;
-  --spacing-1: 0.25rem;
-  --spacing-36: 9rem;
-  --shadow-block: 0px 18px 50px rgb(30 48 110 / 0.1);
-  --spacing-64: 16rem;
-  --accent: 1 33 105;
-  --spacing-48: 12rem;
-  --rounded-sm: 0.375rem;
-  --spacing-4-5: 1.125rem;
-  --spacing-6: 1.5rem;
-  --spacing-56: 14rem;
-  --spacing-14: 3.5rem;
-  --text-muted: #526699;
+  --color-gray: #d4d7dc;
+  --color-white: #fff;
+  --font-family-body: 'Geist', Helvetica, 'Segoe UI', Arial;
+  --font-size-h5: 20px;
+  --border-button-radius: 30px;
+  --font-weight-strong: 600;
+  --color-background: #f6f6f6;
+  --color-light-blue: #e5f0ff;
+  --font-weight-body: 400;
+  --font-weight-button: 600;
+  --font-size-extra-small: 12px;
+  --border-sharp-radius: 5px;
+  --font-size-h2: 40px;
+  --font-size-h3: 32px;
+  --color-black: #1f2328;
+  --border-standard-radius: 10px;
+  --color-input-border: #d4d7dc;
+  --color-blue: #367eed;
+  --color-text-secondary: #535963;
+  --font-weight-anchor: 600;
+  --shadow-regular: 0 0 20px rgba(27, 37, 40, 0.05);
+  --color-medium-blue: #accfff;
+  --color-soft-white: #ededed;
+  --font-size-h7: 14px;
+  --font-size-h1: 60px;
+  --font-size-h6: 16px;
+  --color-dark-gray: #343941;
+  --color-dark-blue: #1b63d2;
+  --font-family-mono: 'Geist Mono', monospace;
+  --font-size-smaller: 14px;
+  --color-text-primary: #1f2328;
+  --font-size-larger: 20px;
+  --font-size-h4: 24px;
+  --font-weight-headings: 600;
+  --font-size-body: 16px;
+  --font-family-headings: 'Geist', Helvetica, 'Segoe UI', Arial;
 }
 ```
 
 ## Components present
 
 - hero with cta
-- feature trio
-- feature alternating
 - logo cloud
-- bento grid
+- feature trio
 
 ## Notes for the agent
 
@@ -134,7 +101,3 @@ Max content width: **1440px**
 - **Spacing** assumes a constant base step; round detected values to your project's scale (4 / 8 / 16) when implementing.
 - **CSS variables** dumped above (when present) are the source's *actual* tokens - those are higher signal than guesses.
 - This page's macrostructure is **Feature Stack**.
-
----
-
-*Generated by Inspo. Open source under MIT, owned and operated by [Together AI](https://www.together.ai). Original site copyright remains with its authors.*

@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useCallback } from "react";
+import Image from "next/image";
 import { Header } from "@/components/Header";
 import { HonestNotice } from "@/components/HonestNotice";
 import { CashFlowShield } from "@/components/CashFlowShield";
@@ -31,6 +32,7 @@ import {
   LayoutGrid,
   Play,
   ArrowRight,
+  TrendingDown,
 } from "lucide-react";
 
 export default function DashboardPage() {
@@ -229,7 +231,7 @@ export default function DashboardPage() {
       await loadDashboardData();
       const drop = Math.max(prevScore - (data.result?.newScore || prevScore - 6), 5);
       setActionImpactAlert({
-        message: data.result?.message || "Remediation executed successfully",
+        message: data.result?.message || "Remediation dispatched to PayPal successfully",
         pointsDropped: drop,
         channel: data.result?.executionChannel || "PAYPAL_AGENT_TOOLKIT",
       });
@@ -256,18 +258,18 @@ export default function DashboardPage() {
 
   if (loading) {
     return (
-      <div className="flex h-screen w-screen flex-col items-center justify-center bg-[#F0F5F7] text-[#1c346c] space-y-4">
-        <Loader2 className="h-10 w-10 animate-spin text-[#1c346c]" />
+      <div className="flex h-screen w-screen flex-col items-center justify-center bg-[#f6f6f6] text-[#1f2328] space-y-4">
+        <Loader2 className="h-10 w-10 animate-spin text-[#367eed]" />
         <div className="text-center space-y-1">
-          <p className="text-base font-bold text-[#1c346c]">Initializing Thaw Early-Warning Engine...</p>
-          <p className="text-xs text-[#526699]">Loading PayPal sandbox telemetry and deterministic trigger weights</p>
+          <p className="text-base font-bold text-[#1f2328]">Initializing Thaw Early-Warning Engine...</p>
+          <p className="text-xs text-[#535963]">Evaluating PayPal sandbox telemetry and deterministic trigger weights</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen pb-16 flex flex-col justify-between bg-[#F0F5F7]">
+    <div className="min-h-screen pb-16 flex flex-col justify-between bg-[#f6f6f6]">
       <div>
         {/* App Header & Scenario Switcher */}
         <Header
@@ -283,13 +285,53 @@ export default function DashboardPage() {
           isSwitching={isSwitching}
         />
 
+        {/* Statsig-style Hero Section */}
+        <section className="bg-white border-b border-[#d4d7dc] py-12 px-4 sm:px-6">
+          <div className="mx-auto max-w-5xl text-center space-y-5">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-[#1f2328] leading-[1.1]">
+              Detect hold risk before PayPal acts.<br />
+              <span className="text-[#367eed]">Shield your merchant cash flow.</span>
+            </h1>
+            <p className="mx-auto max-w-2xl text-base sm:text-lg text-[#535963] leading-relaxed">
+              Thaw continuously monitors 6 documented underwriting triggers — missing tracking, dispute spikes, and address mismatches — proposing human-approval gated AI remediations before funds freeze.
+            </p>
+
+            {/* Statsig-style Hero CTAs */}
+            <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
+              <button
+                onClick={() => {
+                  handleSwitchScenario("drifting");
+                  setActiveTab("shield");
+                }}
+                className="rounded-full bg-[#1f2328] hover:bg-[#343941] text-white px-6 py-3 text-sm font-semibold shadow-sm transition-all"
+              >
+                Test Drifting Store Demo (63/100)
+              </button>
+              <button
+                onClick={() => setIsTourOpen(true)}
+                className="rounded-full bg-white hover:bg-[#f6f6f6] text-[#1f2328] border border-[#d4d7dc] px-6 py-3 text-sm font-semibold shadow-sm transition-all flex items-center gap-2"
+              >
+                <Sparkles className="h-4 w-4 text-[#367eed]" />
+                30-Second Guided Tour
+              </button>
+              <button
+                onClick={() => setIsE2EProofOpen(true)}
+                className="rounded-full bg-[#e5f0ff] hover:bg-[#accfff]/50 text-[#1b63d2] border border-[#accfff] px-5 py-3 text-sm font-bold shadow-sm transition-all flex items-center gap-2"
+              >
+                <Play className="h-4 w-4 text-[#1b63d2]" />
+                Run Live PayPal Proof
+              </button>
+            </div>
+          </div>
+        </section>
+
         {/* Main Workspace Body */}
-        <main className="mx-auto max-w-7xl px-4 sm:px-6 pt-6 space-y-6">
+        <main className="mx-auto max-w-7xl px-4 sm:px-6 pt-8 space-y-8">
           {/* Action Impact Celebratory Banner */}
           {actionImpactAlert && (
-            <div className="rounded-xl border border-emerald-300 bg-emerald-50 p-4 shadow-sm flex items-center justify-between animate-in fade-in slide-in-from-top duration-300">
+            <div className="rounded-[10px] border border-emerald-300 bg-emerald-50 p-4 shadow-sm flex items-center justify-between animate-in fade-in slide-in-from-top duration-300">
               <div className="flex items-center gap-3">
-                <div className="rounded-lg bg-emerald-100 p-2 text-emerald-800">
+                <div className="rounded-full bg-emerald-100 p-2 text-emerald-800">
                   <CheckCircle className="h-5 w-5" />
                 </div>
                 <div>
@@ -301,13 +343,13 @@ export default function DashboardPage() {
                         : "PayPal REST Client"}
                       !
                     </span>
-                    <span className="rounded-md bg-emerald-200 px-2 py-0.5 text-xs font-extrabold text-emerald-900 border border-emerald-300 flex items-center gap-0.5">
+                    <span className="rounded-full bg-emerald-200 px-3 py-0.5 text-xs font-extrabold text-emerald-900 border border-emerald-300 flex items-center gap-0.5">
                       <ArrowDownRight className="h-3.5 w-3.5" />
                       -{actionImpactAlert.pointsDropped} pts Risk Drop
                     </span>
                   </div>
                   <p className="text-xs text-emerald-800 mt-0.5">
-                    {actionImpactAlert.message}. Cash-flow hold exposure updated in real time.
+                    {actionImpactAlert.message}. Cash-flow hold reserve exposure updated in real time.
                   </p>
                 </div>
               </div>
@@ -323,82 +365,18 @@ export default function DashboardPage() {
           {/* Honest Limitation Banner */}
           <HonestNotice />
 
-          {/* Judge Quick-Start Guide Card (Effortless 10-Second Orientation) */}
-          <div className="casper-card p-5 border-l-4 border-l-[#1c346c] space-y-3 bg-gradient-to-r from-white via-white to-[#84bbe3]/10">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[#E4E6EE] pb-2.5">
-              <div className="flex items-center gap-2">
-                <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-[#1c346c] text-white text-xs font-bold">
-                  ⚖️
-                </div>
-                <div>
-                  <h2 className="text-sm font-bold text-[#1c346c]">
-                    Judge Evaluation Guide: How to Test Thaw in 30 Seconds
-                  </h2>
-                  <p className="text-[11px] text-[#526699]">
-                    Follow these 3 simple steps to verify early-warning detection, AI diagnosis, and approval-gated resolution.
-                  </p>
-                </div>
-              </div>
-              <div className="flex items-center gap-2 self-start sm:self-auto">
-                <button
-                  onClick={() => setIsTourOpen(true)}
-                  className="inline-flex items-center gap-1 rounded-lg bg-purple-50 px-2.5 py-1 text-xs font-bold text-purple-700 border border-purple-200 hover:bg-purple-100 transition-colors shadow-xs"
-                >
-                  <Sparkles className="h-3.5 w-3.5" />
-                  30s Tour
-                </button>
-                <button
-                  onClick={() => setIsE2EProofOpen(true)}
-                  className="inline-flex items-center gap-1 rounded-lg bg-emerald-50 px-2.5 py-1 text-xs font-bold text-emerald-800 border border-emerald-300 hover:bg-emerald-100 transition-colors shadow-xs"
-                >
-                  <Play className="h-3.5 w-3.5 text-emerald-700" />
-                  Run Live PayPal Proof
-                </button>
-              </div>
-            </div>
+          {/* Cash Flow Shield Section (Elevated Statsig-style Metrics Strip) */}
+          <CashFlowShield cashFlow={cashFlow} band={band} />
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-3 pt-1">
-              {/* Step 1 */}
-              <div className="rounded-xl border border-[#E4E6EE] bg-[#F0F5F7]/60 p-3 space-y-1">
-                <span className="text-[10px] font-extrabold uppercase tracking-wider text-[#1c346c] block">
-                  Step 1: Check Risk & Held Reserve
-                </span>
-                <p className="text-xs text-[#526699] leading-relaxed">
-                  Notice the <strong>63/100 Hold Score</strong> on the Drifting scenario with <strong>$303 held in 10% rolling reserve</strong>. Thaw catches this before PayPal freezes money.
-                </p>
-              </div>
-
-              {/* Step 2 */}
-              <div className="rounded-xl border border-[#E4E6EE] bg-[#F0F5F7]/60 p-3 space-y-1">
-                <span className="text-[10px] font-extrabold uppercase tracking-wider text-[#1c346c] block">
-                  Step 2: Read Plain-Language AI Diagnosis
-                </span>
-                <p className="text-xs text-[#526699] leading-relaxed">
-                  See the Gemini plain-English explanation pinpointing exactly why: <strong>14 unfulfilled tracking IDs</strong> and a sudden velocity surge.
-                </p>
-              </div>
-
-              {/* Step 3 */}
-              <div className="rounded-xl border border-[#E4E6EE] bg-[#F0F5F7]/60 p-3 space-y-1">
-                <span className="text-[10px] font-extrabold uppercase tracking-wider text-emerald-800 block">
-                  Step 3: Click "Approve & Execute" Below
-                </span>
-                <p className="text-xs text-[#526699] leading-relaxed">
-                  Approve an action in the queue. Watch it dispatch via <strong>PayPal Agent Toolkit</strong>, drop the risk score, and release funds live!
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* Organized Tab Navigation Bar for Clean Judge Browsing */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#E4E6EE] pb-2">
-            <div className="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0 scrollbar-none">
+          {/* Clean Statsig Tab Navigation Strip */}
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#d4d7dc] pb-3">
+            <div className="flex items-center gap-2 overflow-x-auto pb-1 sm:pb-0 scrollbar-none">
               <button
                 onClick={() => setActiveTab("shield")}
-                className={`flex items-center gap-2 rounded-xl px-4 py-2 text-xs font-bold transition-all shrink-0 ${
+                className={`flex items-center gap-2 rounded-full px-4 py-2 text-xs font-bold transition-all shrink-0 ${
                   activeTab === "shield"
-                    ? "bg-[#1c346c] text-white shadow-sm"
-                    : "bg-white text-[#526699] border border-[#E4E6EE] hover:text-[#1c346c]"
+                    ? "bg-[#1f2328] text-white shadow-sm"
+                    : "bg-white text-[#535963] border border-[#d4d7dc] hover:text-[#1f2328]"
                 }`}
               >
                 <Shield className="h-4 w-4" />
@@ -407,10 +385,10 @@ export default function DashboardPage() {
 
               <button
                 onClick={() => setActiveTab("signals")}
-                className={`flex items-center gap-2 rounded-xl px-4 py-2 text-xs font-bold transition-all shrink-0 ${
+                className={`flex items-center gap-2 rounded-full px-4 py-2 text-xs font-bold transition-all shrink-0 ${
                   activeTab === "signals"
-                    ? "bg-[#1c346c] text-white shadow-sm"
-                    : "bg-white text-[#526699] border border-[#E4E6EE] hover:text-[#1c346c]"
+                    ? "bg-[#1f2328] text-white shadow-sm"
+                    : "bg-white text-[#535963] border border-[#d4d7dc] hover:text-[#1f2328]"
                 }`}
               >
                 <SlidersHorizontal className="h-4 w-4" />
@@ -419,22 +397,22 @@ export default function DashboardPage() {
 
               <button
                 onClick={() => setActiveTab("orders")}
-                className={`flex items-center gap-2 rounded-xl px-4 py-2 text-xs font-bold transition-all shrink-0 ${
+                className={`flex items-center gap-2 rounded-full px-4 py-2 text-xs font-bold transition-all shrink-0 ${
                   activeTab === "orders"
-                    ? "bg-[#1c346c] text-white shadow-sm"
-                    : "bg-white text-[#526699] border border-[#E4E6EE] hover:text-[#1c346c]"
+                    ? "bg-[#1f2328] text-white shadow-sm"
+                    : "bg-white text-[#535963] border border-[#d4d7dc] hover:text-[#1f2328]"
                 }`}
               >
                 <Package className="h-4 w-4" />
-                3. Orders & Telemetry Ledger
+                3. Orders Ledger & Telemetry
               </button>
 
               <button
                 onClick={() => setActiveTab("simulator")}
-                className={`flex items-center gap-2 rounded-xl px-4 py-2 text-xs font-bold transition-all shrink-0 ${
+                className={`flex items-center gap-2 rounded-full px-4 py-2 text-xs font-bold transition-all shrink-0 ${
                   activeTab === "simulator"
-                    ? "bg-[#1c346c] text-white shadow-sm"
-                    : "bg-white text-[#526699] border border-[#E4E6EE] hover:text-[#1c346c]"
+                    ? "bg-[#1f2328] text-white shadow-sm"
+                    : "bg-white text-[#535963] border border-[#d4d7dc] hover:text-[#1f2328]"
                 }`}
               >
                 <Zap className="h-4 w-4" />
@@ -443,10 +421,10 @@ export default function DashboardPage() {
 
               <button
                 onClick={() => setActiveTab("audit")}
-                className={`flex items-center gap-2 rounded-xl px-4 py-2 text-xs font-bold transition-all shrink-0 ${
+                className={`flex items-center gap-2 rounded-full px-4 py-2 text-xs font-bold transition-all shrink-0 ${
                   activeTab === "audit"
-                    ? "bg-[#1c346c] text-white shadow-sm"
-                    : "bg-white text-[#526699] border border-[#E4E6EE] hover:text-[#1c346c]"
+                    ? "bg-[#1f2328] text-white shadow-sm"
+                    : "bg-white text-[#535963] border border-[#d4d7dc] hover:text-[#1f2328]"
                 }`}
               >
                 <History className="h-4 w-4" />
@@ -454,13 +432,13 @@ export default function DashboardPage() {
               </button>
             </div>
 
-            {/* Toggle Full Page View */}
+            {/* Full Dashboard View Toggle */}
             <button
               onClick={() => setActiveTab(activeTab === "all" ? "shield" : "all")}
-              className={`flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-semibold border transition-all shrink-0 ${
+              className={`flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-semibold border transition-all shrink-0 ${
                 activeTab === "all"
-                  ? "bg-[#84bbe3]/30 text-[#1c346c] border-[#84bbe3]"
-                  : "bg-white text-[#526699] border-[#E4E6EE] hover:text-[#1c346c]"
+                  ? "bg-[#e5f0ff] text-[#1b63d2] border-[#accfff]"
+                  : "bg-white text-[#535963] border border-[#d4d7dc] hover:text-[#1f2328]"
               }`}
             >
               <LayoutGrid className="h-3.5 w-3.5" />
@@ -468,15 +446,12 @@ export default function DashboardPage() {
             </button>
           </div>
 
-          {/* TAB 1: Main Core Demo (Risk, AI Diagnosis, Cash Flow, Actions) */}
+          {/* TAB 1: Main Core Demo (Risk, AI Diagnosis, Action Queue) */}
           {(activeTab === "shield" || activeTab === "all") && (
             <div className="space-y-6">
-              {/* Cash Flow Shield Section */}
-              <CashFlowShield cashFlow={cashFlow} band={band} />
-
               {/* Core Risk Gauge & AI Diagnosis Grid */}
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-                {/* Visual Risk Gauge (5 cols for better spacing) */}
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+                {/* Visual Risk Gauge (5 cols) */}
                 <div className="lg:col-span-5">
                   <RiskGauge
                     score={score}
@@ -548,13 +523,22 @@ export default function DashboardPage() {
         </main>
       </div>
 
-      {/* Casper Light Footer */}
-      <footer className="mt-16 border-t border-[#E4E6EE] bg-white py-6 text-center text-xs text-[#526699]">
-        <div className="mx-auto max-w-7xl px-4 flex flex-col sm:flex-row items-center justify-between gap-2">
-          <span className="text-[#1c346c] font-medium">
-            <strong>Thaw</strong> — Early-warning & cash-flow shield built for PayPal sellers.
-          </span>
-          <span className="text-xs text-[#64759d]">
+      {/* Statsig Clean Footer */}
+      <footer className="mt-20 border-t border-[#d4d7dc] bg-white py-8 text-center text-xs text-[#535963]">
+        <div className="mx-auto max-w-7xl px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="flex items-center gap-2.5">
+            <Image
+              src="/thaw-logo.png"
+              alt="THAW"
+              width={80}
+              height={26}
+              className="object-contain"
+            />
+            <span className="text-[#1f2328] font-semibold">
+              — Early-warning & cash-flow shield built for PayPal sellers.
+            </span>
+          </div>
+          <span className="text-xs text-[#535963]">
             Open-source MIT License • PayPal AI Hackathon 2026
           </span>
         </div>

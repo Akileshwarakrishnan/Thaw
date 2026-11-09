@@ -9,24 +9,23 @@ export function HonestNotice() {
   if (dismissed) return null;
 
   return (
-    <div className="relative overflow-hidden rounded-xl border border-red-200 bg-red-50/50 p-4 shadow-sm">
+    <div className="relative overflow-hidden rounded-[10px] border border-[#d4d7dc] bg-white p-4 shadow-[0_0_20px_rgba(27,37,40,0.03)]">
       <div className="flex items-start gap-3">
-        <div className="mt-0.5 rounded-lg bg-red-100 p-2 text-[#cc352c] shrink-0">
-          <ShieldAlert className="h-5 w-5" />
+        <div className="mt-0.5 rounded-full bg-[#e5f0ff] p-2 text-[#367eed] shrink-0">
+          <ShieldAlert className="h-4 w-4" />
         </div>
-        <div className="flex-1 text-xs sm:text-sm leading-relaxed text-[#1c346c]">
-          <span className="font-bold text-[#cc352c]">
-            Honest Proxy Limitation:
+        <div className="flex-1 text-xs leading-relaxed text-[#1f2328]">
+          <span className="font-bold text-[#1f2328]">
+            Honest Proxy Limitation Notice:
           </span>{" "}
-          PayPal&apos;s real internal risk model is proprietary.
-          Thaw is an independent early-warning shield built strictly from
-          publicly documented merchant signals, dispute velocity rules, and
-          fulfillment requirements. Built for PayPal sellers to prevent surprise
-          cash freezes.
+          PayPal&apos;s internal risk and underwriting models are proprietary.
+          Thaw is an independent intelligent early-warning proxy built strictly from
+          publicly documented merchant fulfillment policies, dispute thresholds, and
+          reserve rules. Designed for PayPal merchants to prevent sudden cash freezes before they occur.
         </div>
         <button
           onClick={() => setDismissed(true)}
-          className="rounded p-1 text-[#64759d] hover:bg-red-100 hover:text-black transition-colors"
+          className="rounded-full p-1 text-[#535963] hover:bg-[#f6f6f6] hover:text-[#1f2328] transition-colors"
           title="Dismiss notice"
         >
           <X className="h-4 w-4" />
