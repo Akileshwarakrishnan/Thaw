@@ -26,9 +26,9 @@ export function CashFlowShield({ cashFlow, band }: CashFlowShieldProps) {
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {/* Available Now */}
-        <div className="glass-panel glass-panel-hover rounded-xl p-4 relative overflow-hidden">
+        <div className="glass-panel glass-panel-hover rounded-2xl p-5 relative overflow-hidden shadow-casper-sm">
           <div className="absolute top-0 right-0 w-24 h-24 bg-emerald-500/5 rounded-full blur-xl pointer-events-none" />
-          <div className="flex items-center justify-between text-xs text-slate-400">
+          <div className="flex items-center justify-between text-xs text-[#a2b4cc]">
             <span>Cleared & Available Now</span>
             <CheckCircle2 className="h-4 w-4 text-emerald-400" />
           </div>
@@ -38,34 +38,34 @@ export function CashFlowShield({ cashFlow, band }: CashFlowShieldProps) {
             </span>
             <span className="text-xs text-emerald-400 font-medium">Cleared</span>
           </div>
-          <p className="mt-1 text-[11px] text-slate-400">
+          <p className="mt-1 text-[11px] text-[#a2b4cc]">
             Unrestricted funds ready for immediate bank withdrawal.
           </p>
         </div>
 
         {/* Estimated at Risk */}
-        <div className={`glass-panel glass-panel-hover rounded-xl p-4 relative overflow-hidden border-l-4 ${
+        <div className={`glass-panel glass-panel-hover rounded-2xl p-5 relative overflow-hidden border-l-4 shadow-casper-sm ${
           band === "HIGH"
-            ? "border-l-rose-500 bg-rose-950/20"
+            ? "border-l-[#cc352c] bg-[#cc352c]/10"
             : band === "MEDIUM"
             ? "border-l-amber-500 bg-amber-950/20"
             : "border-l-emerald-500 bg-emerald-950/10"
         }`}>
-          <div className="flex items-center justify-between text-xs text-slate-400">
+          <div className="flex items-center justify-between text-xs text-[#a2b4cc]">
             <span>Estimated At Risk (Hold Reserve)</span>
             <ShieldAlert className={`h-4 w-4 ${
-              band === "HIGH" ? "text-rose-400" : band === "MEDIUM" ? "text-amber-400" : "text-emerald-400"
+              band === "HIGH" ? "text-[#cc352c]" : band === "MEDIUM" ? "text-amber-400" : "text-emerald-400"
             }`} />
           </div>
           <div className="mt-2 flex items-baseline gap-2">
             <span className={`text-2xl font-bold tracking-tight ${
-              band === "HIGH" ? "text-rose-400" : band === "MEDIUM" ? "text-amber-400" : "text-emerald-400"
+              band === "HIGH" ? "text-[#cc352c]" : band === "MEDIUM" ? "text-amber-400" : "text-emerald-400"
             }`}>
               ${cashFlow.atRiskAmount.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
             </span>
-            <span className="text-xs text-slate-400">({atRiskPct}% of 14d)</span>
+            <span className="text-xs text-[#a2b4cc]">({atRiskPct}% of 14d)</span>
           </div>
-          <p className="mt-1 text-[11px] text-slate-400">
+          <p className="mt-1 text-[11px] text-[#a2b4cc]">
             {band === "HIGH"
               ? "Critical exposure: PayPal automated algorithms freeze 30% on high defect risk."
               : band === "MEDIUM"
@@ -75,10 +75,10 @@ export function CashFlowShield({ cashFlow, band }: CashFlowShieldProps) {
         </div>
 
         {/* Expected Release Timeline */}
-        <div className="glass-panel glass-panel-hover rounded-xl p-4 relative overflow-hidden">
-          <div className="flex items-center justify-between text-xs text-slate-400">
+        <div className="glass-panel glass-panel-hover rounded-2xl p-5 relative overflow-hidden shadow-casper-sm">
+          <div className="flex items-center justify-between text-xs text-[#a2b4cc]">
             <span>Expected Release Timeline</span>
-            <Calendar className="h-4 w-4 text-brand-400" />
+            <Calendar className="h-4 w-4 text-[#84bbe3]" />
           </div>
           <div className="mt-2 flex items-baseline gap-2">
             <span className="text-xl font-bold tracking-tight text-white">
@@ -86,28 +86,28 @@ export function CashFlowShield({ cashFlow, band }: CashFlowShieldProps) {
                 ? "Immediate"
                 : `${cashFlow.expectedReleaseDays} Days`}
             </span>
-            <span className="text-xs text-slate-400">
+            <span className="text-xs text-[#a2b4cc]">
               {cashFlow.expectedReleaseDays === 0 ? "No delay" : "Rolling window"}
             </span>
           </div>
-          <p className="mt-1 text-[11px] text-slate-400">
+          <p className="mt-1 text-[11px] text-[#a2b4cc]">
             {cashFlow.expectedReleaseRange}
           </p>
         </div>
 
         {/* 14-Day Sales Velocity */}
-        <div className="glass-panel glass-panel-hover rounded-xl p-4 relative overflow-hidden">
-          <div className="flex items-center justify-between text-xs text-slate-400">
+        <div className="glass-panel glass-panel-hover rounded-2xl p-5 relative overflow-hidden shadow-casper-sm">
+          <div className="flex items-center justify-between text-xs text-[#a2b4cc]">
             <span>Trailing 14-Day Sales Volume</span>
-            <TrendingUp className="h-4 w-4 text-indigo-400" />
+            <TrendingUp className="h-4 w-4 text-[#84bbe3]" />
           </div>
           <div className="mt-2 flex items-baseline gap-2">
             <span className="text-2xl font-bold tracking-tight text-white">
               ${cashFlow.trailing14dSales.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
             </span>
-            <span className="text-xs text-indigo-400 font-medium">14d Gross</span>
+            <span className="text-xs text-[#84bbe3] font-medium">14d Gross</span>
           </div>
-          <p className="mt-1 text-[11px] text-slate-400">
+          <p className="mt-1 text-[11px] text-[#a2b4cc]">
             Underwriting benchmark window used for hold calculations.
           </p>
         </div>

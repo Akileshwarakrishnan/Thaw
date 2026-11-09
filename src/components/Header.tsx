@@ -44,7 +44,7 @@ export function Header({
       <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-4 px-4 py-3 sm:px-6">
         {/* Brand & Store Name */}
         <div className="flex items-center gap-3">
-          <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-brand-400 via-brand-600 to-indigo-700 shadow-lg shadow-brand-500/25">
+          <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-[#84bbe3] via-[#1c346c] to-[#0c1836] shadow-md shadow-[#1c346c]/30 border border-[#84bbe3]/30">
             <Shield className="h-6 w-6 text-white" />
           </div>
           <div>
@@ -52,7 +52,7 @@ export function Header({
               <span className="text-xl font-bold tracking-tight text-white">
                 Thaw
               </span>
-              <span className="rounded-full bg-brand-500/10 px-2.5 py-0.5 text-xs font-medium text-brand-300 border border-brand-500/20">
+              <span className="rounded-full bg-[#84bbe3]/10 px-2.5 py-0.5 text-xs font-semibold text-[#84bbe3] border border-[#84bbe3]/30">
                 built for PayPal sellers
               </span>
               <span className="flex items-center gap-1 rounded-full bg-emerald-500/10 px-2 py-0.5 text-[11px] font-medium text-emerald-400 border border-emerald-500/20">
@@ -60,8 +60,8 @@ export function Header({
                 Sandbox Live
               </span>
             </div>
-            <div className="flex items-center gap-2 text-xs text-slate-400">
-              <Store className="h-3 w-3 text-slate-400" />
+            <div className="flex items-center gap-2 text-xs text-[#a2b4cc]">
+              <Store className="h-3 w-3 text-[#84bbe3]" />
               <span>{storeName || "Active Merchant Account"}</span>
             </div>
           </div>
@@ -155,10 +155,10 @@ export function Header({
 
           <button
             onClick={onOpenConnectModal}
-            className="flex items-center gap-1.5 rounded-lg bg-brand-600 px-3 py-1.5 text-xs font-semibold text-white shadow hover:bg-brand-500 transition-colors"
+            className="flex items-center gap-1.5 rounded-lg bg-[#1c346c] hover:bg-[#25448c] border border-[#84bbe3]/30 px-3 py-1.5 text-xs font-semibold text-white shadow-casper-sm transition-colors"
             title="Configure PayPal Sandbox credentials"
           >
-            <Sliders className="h-3.5 w-3.5" />
+            <Sliders className="h-3.5 w-3.5 text-[#84bbe3]" />
             Credentials
           </button>
         </div>

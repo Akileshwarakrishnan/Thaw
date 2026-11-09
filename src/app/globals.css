@@ -3,31 +3,46 @@
 @tailwind utilities;
 
 :root {
-  --background: #090d16;
+  --color-ui-colors-background-neutral-2: #F0F5F7;
+  --color-brand-navy: #1c346c;
+  --color-brand-ice: #84bbe3;
+  --color-brand-slate: #64759d;
+  --color-brand-frost: #a2b4cc;
+  --color-brand-alert: #cc352c;
+  --background: #090e1a;
   --foreground: #f1f5f9;
 }
 
 body {
   color: var(--foreground);
-  background: radial-gradient(circle at top right, #0f1c3f 0%, #080d1a 50%, #050811 100%);
+  background: radial-gradient(circle at 15% 10%, #15274d 0%, #090e1a 45%, #050811 100%);
   min-height: 100vh;
   font-feature-settings: "cv02", "cv03", "cv04", "cv11";
 }
 
-/* Glassmorphism utility classes */
+/* Casper-inspired refined panels: clean, airy, gentle shadows */
 .glass-panel {
-  background: rgba(15, 23, 42, 0.7);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(14, 23, 46, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(132, 187, 227, 0.14);
+  box-shadow: 0 5px 30px rgba(28, 52, 108, 0.12);
 }
 
 .glass-panel-hover {
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .glass-panel-hover:hover {
-  border-color: rgba(56, 189, 248, 0.3);
-  box-shadow: 0 10px 25px -5px rgba(0, 112, 186, 0.15);
+  border-color: rgba(132, 187, 227, 0.35);
+  box-shadow: 0 12px 35px -5px rgba(28, 52, 108, 0.28);
+  transform: translateY(-1px);
+}
+
+/* Crisp button & card pills */
+.casper-badge {
+  border-radius: 9999px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
 }
 
 /* Custom scrollbars */
@@ -36,12 +51,12 @@ body {
   height: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: #090d16;
+  background: #090e1a;
 }
 ::-webkit-scrollbar-thumb {
-  background: #1e293b;
+  background: #1c346c;
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #334155;
+  background: #25448c;
 }
