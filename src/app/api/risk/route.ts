@@ -1,10 +1,85 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
-import { evaluateRisk } from "@/lib/risk/engine";
+import { evaluateRisk, UNDERWRITING_PROFILES, UnderwritingProfile } from "@/lib/risk/engine";
 import { aiService } from "@/lib/ai/service";
 
-export async function GET() {
+export const dynamic = "force-dynamic";
+
+export async function GET(request: Request) {
   try {
+    const { searchParams } = new URL(request.url);
+    const profileParam = searchParams.get("profile") as UnderwritingProfile | null;
+
+    let seller = await prisma.seller.findFirst();
+    if (!seller) {
+      seller = await prisma.seller.create({
+        data: {
+          paypalMerchantId: "MCH-THAW-INIT",
+          displayName: "Demo Merchant Account",
+        },
+      });
+    }
+
+    // Dynamic profile evaluation if requested
+    if (profileParam && ["STANDARD_RETAIL", "DROPSHIPPING", "DIGITAL_SAAS"].includes(profileParam)) {
+      const orders = await prisma.order.findMany({
+        where: { sellerId: seller.id },
+      });
+      const disputes = await prisma.dispute.findMany({
+        where: { order: { sellerId: seller.id } },
+      });
+
+      const evalResult = evaluateRisk({ orders, disputes, profile: profileParam });
+      const recentSnapshots = await prisma.riskSnapshot.findMany({
+        where: { sellerId: seller.id },
+        orderBy: { computedAt: "desc" },
+        take: 4,
+        select: { score: true },
+      });
+      const history = recentSnapshots.reverse().map((s) => s.score);
+      if (history.length === 0) history.push(evalResult.score);
+      else history[history.length - 1] = evalResult.score;
+
+      const profileConfig = UNDERWRITING_PROFILES[profileParam];
+
+      return NextResponse.json({
+        success: true,
+        profile: profileParam,
+        profileConfig,
+        snapshot: {
+          id: `profile-${profileParam.toLowerCase()}`,
+          score: evalResult.score,
+          band: evalResult.band,
+          computedAt: new Date().toISOString(),
+          history,
+          cashFlow: {
+            available: evalResult.cashFlow.clearedBalance,
+            atRisk: evalResult.cashFlow.atRiskAmount,
+            expectedReleaseDays: evalResult.cashFlow.expectedReleaseDays,
+            releaseDescription: evalResult.cashFlow.expectedReleaseRange,
+          },
+          signals: evalResult.signals,
+          topFactors: evalResult.topFactors,
+          explanation: {
+            summary: `Risk re-computed under the ${profileConfig.name} profile (${evalResult.score}/100, ${evalResult.band} band). ${profileConfig.description}`,
+            topReasons: evalResult.topFactors.slice(0, 3).map((f, i) => ({
+              rank: i + 1,
+              title: f.name,
+              explanation: f.impactDescription,
+              actionableAdvice: `Address ${f.name} to optimize ${profileConfig.name} compliance.`,
+              estimatedRiskReduction: Math.round(f.contribution),
+            })),
+            model: "thaw-deterministic-profile-engine",
+          },
+          seller: {
+            id: seller.id,
+            displayName: seller.displayName,
+            merchantId: seller.paypalMerchantId,
+          },
+        },
+      });
+    }
+
     let snapshot = await prisma.riskSnapshot.findFirst({
       orderBy: { computedAt: "desc" },
       include: {

@@ -88,6 +88,42 @@ export function ActionQueue({
     }
   };
 
+  const getWeightImpact = (type: string, drop: number) => {
+    switch (type) {
+      case "upload_tracking":
+        return {
+          label: "Missing Tracking Weight",
+          maxWeight: 25,
+          citation: "PayPal Help Center FAQ1265 (Fulfillment Hold Gate)",
+        };
+      case "draft_reply":
+      case "appeal":
+        return {
+          label: "Dispute Risk Weight",
+          maxWeight: 30,
+          citation: "PayPal User Agreement §10 (Chargeback Threshold)",
+        };
+      case "refund":
+        return {
+          label: "Address Mismatch & Fee Defense",
+          maxWeight: 10,
+          citation: "Seller Protection Policy §3",
+        };
+      case "pre_notify_spike":
+        return {
+          label: "Volume Velocity Underwriting",
+          maxWeight: 20,
+          citation: "PayPal Underwriting Growth Guidelines",
+        };
+      default:
+        return {
+          label: "General Account Weight",
+          maxWeight: 10,
+          citation: "PayPal Underwriting Policy",
+        };
+    }
+  };
+
   return (
     <div className="bg-white rounded-[10px] p-6 border border-[#d4d7dc] shadow-[0_0_20px_rgba(27,37,40,0.04)] space-y-4">
       {/* Header */}
@@ -168,6 +204,19 @@ export function ActionQueue({
                         <ArrowDownRight className="h-3 w-3" />
                         -{action.expectedRiskDrop} pts
                       </span>
+
+                      {/* Weight Impact Badge */}
+                      {(() => {
+                        const impact = getWeightImpact(action.type, action.expectedRiskDrop);
+                        return (
+                          <span
+                            className="hidden sm:inline-flex items-center gap-1 rounded-full bg-[#f0f5f7] px-2.5 py-0.5 text-[10px] font-medium text-[#1c346c] border border-[#a2b4cc]/50"
+                            title={`Removes risk exposure against ${impact.label} (${impact.maxWeight}% max weight). Citation: ${impact.citation}`}
+                          >
+                            <span className="font-semibold text-[#1f2328]">Weight Impact:</span> -{action.expectedRiskDrop} pts from {impact.label} ({impact.maxWeight}% max)
+                          </span>
+                        );
+                      })()}
                     </div>
 
                     <p className="text-xs text-[#535963] leading-relaxed">

@@ -29,11 +29,82 @@ export interface DisputeInput {
   reason: string;
 }
 
+export type UnderwritingProfile = "STANDARD_RETAIL" | "DROPSHIPPING" | "DIGITAL_SAAS";
+
+export interface WeightProfileConfig {
+  id: UnderwritingProfile;
+  name: string;
+  tagline: string;
+  description: string;
+  weights: {
+    disputeRate: number;
+    missingTracking: number;
+    volumeSpike: number;
+    addressMismatch: number;
+    refundRate: number;
+    disputeDeadlines: number;
+  };
+}
+
+export const UNDERWRITING_PROFILES: Record<UnderwritingProfile, WeightProfileConfig> = {
+  STANDARD_RETAIL: {
+    id: "STANDARD_RETAIL",
+    name: "Standard Retail & Physical E-Commerce",
+    tagline: "Default Balanced Physical Goods Model",
+    description: "55% weighted on prompt carrier tracking and dispute rates. Matches standard PayPal Seller Protection guidelines.",
+    weights: {
+      disputeRate: 30,
+      missingTracking: 25,
+      volumeSpike: 20,
+      addressMismatch: 10,
+      refundRate: 10,
+      disputeDeadlines: 5,
+    },
+  },
+  DROPSHIPPING: {
+    id: "DROPSHIPPING",
+    name: "High-Velocity Dropshipping",
+    tagline: "Supplier Fulfillment Delay Sensitivity",
+    description: "Extended international fulfillment lines. Elevated tracking scrutiny (35%) and unconfirmed address scrutiny (15%).",
+    weights: {
+      disputeRate: 25,
+      missingTracking: 35,
+      volumeSpike: 15,
+      addressMismatch: 15,
+      refundRate: 5,
+      disputeDeadlines: 5,
+    },
+  },
+  DIGITAL_SAAS: {
+    id: "DIGITAL_SAAS",
+    name: "Digital Goods, Software & SaaS",
+    tagline: "Zero Physical Tracking Model",
+    description: "No physical dispatch. Weight reallocated from shipping to dispute defense (45%) and refund velocity (25%).",
+    weights: {
+      disputeRate: 45,
+      missingTracking: 0,
+      volumeSpike: 20,
+      addressMismatch: 0,
+      refundRate: 25,
+      disputeDeadlines: 10,
+    },
+  },
+};
+
 export interface EvaluationInput {
   orders: OrderInput[];
   disputes: DisputeInput[];
   referenceDate?: Date;
   currentBalance?: number;
+  profile?: UnderwritingProfile;
+  customWeights?: {
+    disputeRate: number;
+    missingTracking: number;
+    volumeSpike: number;
+    addressMismatch: number;
+    refundRate: number;
+    disputeDeadlines: number;
+  };
 }
 
 // Weights as specified in the hackathon build spec
@@ -47,6 +118,10 @@ export const RISK_WEIGHTS = {
 } as const;
 
 export function evaluateRisk(input: EvaluationInput): RiskEvaluationResult {
+  const activeWeights =
+    input.customWeights ||
+    (input.profile ? UNDERWRITING_PROFILES[input.profile]?.weights : null) ||
+    RISK_WEIGHTS;
   const now = input.referenceDate ? new Date(input.referenceDate) : new Date();
 
   // Helper date boundaries
@@ -105,10 +180,10 @@ export function evaluateRisk(input: EvaluationInput): RiskEvaluationResult {
     normalizedDisputeScore = Math.min(normalizedDisputeScore + 0.15, 1);
   }
   const disputeContribution = Number(
-    (normalizedDisputeScore * RISK_WEIGHTS.disputeRate).toFixed(1)
+    (normalizedDisputeScore * activeWeights.disputeRate).toFixed(1)
   );
 
-  // 2. MISSING TRACKING (Weight 25)
+  // 2. MISSING TRACKING (Weight configured)
   // Share of physical orders older than 3 days with no tracking number
   const physicalOrdersOlderThan3d = input.orders.filter(
     (o) => new Date(o.createdAt) <= threeDaysAgo
@@ -128,10 +203,10 @@ export function evaluateRisk(input: EvaluationInput): RiskEvaluationResult {
     1
   );
   const trackingContribution = Number(
-    (normalizedTrackingScore * RISK_WEIGHTS.missingTracking).toFixed(1)
+    (normalizedTrackingScore * activeWeights.missingTracking).toFixed(1)
   );
 
-  // 3. VOLUME SPIKE (Weight 20)
+  // 3. VOLUME SPIKE (Weight configured)
   // Last 7 days sales vs trailing weekly average (or baseline)
   const salesLast7d = ordersLast7d.reduce((sum, o) => sum + o.amount, 0);
   // Estimate baseline weekly sales from the preceding 3 weeks
@@ -151,10 +226,10 @@ export function evaluateRisk(input: EvaluationInput): RiskEvaluationResult {
     1
   );
   const spikeContribution = Number(
-    (normalizedSpikeScore * RISK_WEIGHTS.volumeSpike).toFixed(1)
+    (normalizedSpikeScore * activeWeights.volumeSpike).toFixed(1)
   );
 
-  // 4. ADDRESS MISMATCH (Weight 10)
+  // 4. ADDRESS MISMATCH (Weight configured)
   // Orders where shipping address differs from transaction address (voids Seller Protection)
   const addressMismatchOrders = ordersLast30d.filter(
     (o) => o.isAddressMismatch || o.sellerProtectionStatus === "NOT_ELIGIBLE"
@@ -170,10 +245,10 @@ export function evaluateRisk(input: EvaluationInput): RiskEvaluationResult {
     1
   );
   const mismatchContribution = Number(
-    (normalizedMismatchScore * RISK_WEIGHTS.addressMismatch).toFixed(1)
+    (normalizedMismatchScore * activeWeights.addressMismatch).toFixed(1)
   );
 
-  // 5. REFUND RATE (Weight 10)
+  // 5. REFUND RATE (Weight configured)
   // Total refunds divided by total sales in last 30 days
   const totalRefunded30d = ordersLast30d.reduce(
     (sum, o) => sum + (o.refundedAmount || 0),
@@ -187,10 +262,10 @@ export function evaluateRisk(input: EvaluationInput): RiskEvaluationResult {
     1
   );
   const refundContribution = Number(
-    (normalizedRefundScore * RISK_WEIGHTS.refundRate).toFixed(1)
+    (normalizedRefundScore * activeWeights.refundRate).toFixed(1)
   );
 
-  // 6. DISPUTE DEADLINES (Weight 5)
+  // 6. DISPUTE DEADLINES (Weight configured)
   // Open disputes with response due within 48 hours or overdue
   const openDisputes = input.disputes.filter((d) => d.status !== "RESOLVED");
   const urgentDisputes = openDisputes.filter(
@@ -203,7 +278,7 @@ export function evaluateRisk(input: EvaluationInput): RiskEvaluationResult {
       ? 0.5
       : 1.0;
   const deadlineContribution = Number(
-    (normalizedDeadlineScore * RISK_WEIGHTS.disputeDeadlines).toFixed(1)
+    (normalizedDeadlineScore * activeWeights.disputeDeadlines).toFixed(1)
   );
 
   // Compute Total Raw Score (0 to 100)
@@ -265,7 +340,7 @@ export function evaluateRisk(input: EvaluationInput): RiskEvaluationResult {
     disputeRate: {
       id: "dispute_rate",
       name: "Dispute Rate & Trend",
-      weight: RISK_WEIGHTS.disputeRate,
+      weight: activeWeights.disputeRate,
       rawValue: Number(rawDisputeRatePct.toFixed(2)),
       displayValue: `${rawDisputeRatePct.toFixed(1)}%`,
       normalizedScore: Number(normalizedDisputeScore.toFixed(2)),
@@ -285,7 +360,7 @@ export function evaluateRisk(input: EvaluationInput): RiskEvaluationResult {
     missingTracking: {
       id: "missing_tracking",
       name: "Missing Tracking Numbers",
-      weight: RISK_WEIGHTS.missingTracking,
+      weight: activeWeights.missingTracking,
       rawValue: Number((missingTrackingRatio * 100).toFixed(1)),
       displayValue: `${missingTrackingOrders.length} orders (${(
         missingTrackingRatio * 100
@@ -305,7 +380,7 @@ export function evaluateRisk(input: EvaluationInput): RiskEvaluationResult {
     volumeSpike: {
       id: "volume_spike",
       name: "Sudden Volume Spike",
-      weight: RISK_WEIGHTS.volumeSpike,
+      weight: activeWeights.volumeSpike,
       rawValue: Number(spikeRatio.toFixed(2)),
       displayValue: `${spikeRatio.toFixed(1)}x baseline`,
       normalizedScore: Number(normalizedSpikeScore.toFixed(2)),
@@ -325,7 +400,7 @@ export function evaluateRisk(input: EvaluationInput): RiskEvaluationResult {
     addressMismatch: {
       id: "address_mismatch",
       name: "Address Mismatch (Protection Voided)",
-      weight: RISK_WEIGHTS.addressMismatch,
+      weight: activeWeights.addressMismatch,
       rawValue: Number((mismatchRatio * 100).toFixed(1)),
       displayValue: `${addressMismatchOrders.length} orders (${(
         mismatchRatio * 100
@@ -345,7 +420,7 @@ export function evaluateRisk(input: EvaluationInput): RiskEvaluationResult {
     refundRate: {
       id: "refund_rate",
       name: "Refund Velocity",
-      weight: RISK_WEIGHTS.refundRate,
+      weight: activeWeights.refundRate,
       rawValue: Number(refundRatePct.toFixed(2)),
       displayValue: `${refundRatePct.toFixed(1)}% ($${totalRefunded30d.toFixed(0)})`,
       normalizedScore: Number(normalizedRefundScore.toFixed(2)),
@@ -365,7 +440,7 @@ export function evaluateRisk(input: EvaluationInput): RiskEvaluationResult {
     disputeDeadlines: {
       id: "dispute_deadlines",
       name: "Expiring Dispute Deadlines",
-      weight: RISK_WEIGHTS.disputeDeadlines,
+      weight: activeWeights.disputeDeadlines,
       rawValue: urgentDisputes.length,
       displayValue: `${urgentDisputes.length} urgent`,
       normalizedScore: Number(normalizedDeadlineScore.toFixed(2)),

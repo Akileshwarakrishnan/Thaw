@@ -17,6 +17,7 @@ import { ConnectModal } from "@/components/ConnectModal";
 import { GuidedTourModal } from "@/components/GuidedTourModal";
 import { E2EProofModal } from "@/components/E2EProofModal";
 import { RiskBand, RiskSignalsBreakdown, CashFlowMetrics } from "@/lib/risk/types";
+import { UnderwritingProfile } from "@/lib/risk/engine";
 import {
   Loader2,
   RefreshCw,
@@ -39,6 +40,7 @@ export default function DashboardPage() {
   const [loading, setLoading] = useState(true);
   const [currentScenario, setCurrentScenario] = useState<"healthy" | "drifting" | "post_spike">("drifting");
   const [storeName, setStoreName] = useState("ApexGear Apparel (Drifting Store)");
+  const [underwritingProfile, setUnderwritingProfile] = useState<UnderwritingProfile>("STANDARD_RETAIL");
   const [isSyncing, setIsSyncing] = useState(false);
   const [isSwitching, setIsSwitching] = useState(false);
   const [activeTab, setActiveTab] = useState<"shield" | "signals" | "orders" | "simulator" | "audit" | "all">("shield");
@@ -249,6 +251,41 @@ export default function DashboardPage() {
       body: JSON.stringify({ rejectedBy: "seller" }),
     });
     await loadDashboardData();
+  };
+
+  const handleProfileChange = async (profile: UnderwritingProfile) => {
+    setUnderwritingProfile(profile);
+    try {
+      setIsSyncing(true);
+      const res = await fetch(`/api/risk?profile=${profile}`).then((r) => r.json());
+      if (res.success && res.snapshot) {
+        setScore(res.snapshot.score);
+        setBand(res.snapshot.band);
+        setSignals(res.snapshot.signals);
+        if (res.snapshot.cashFlow) {
+          setCashFlow({
+            clearedBalance: res.snapshot.cashFlow.available,
+            atRiskAmount: res.snapshot.cashFlow.atRisk,
+            trailing14dSales:
+              res.snapshot.cashFlow.atRisk /
+                (res.snapshot.band === "HIGH" ? 0.3 : res.snapshot.band === "MEDIUM" ? 0.1 : 1) || 3500,
+            expectedReleaseDays: res.snapshot.cashFlow.expectedReleaseDays,
+            expectedReleaseRange: res.snapshot.cashFlow.releaseDescription,
+          });
+        }
+        if (res.snapshot.explanation) {
+          setExplanation({
+            summary: res.snapshot.explanation.summary,
+            topReasons: res.snapshot.explanation.topReasons,
+            model: res.snapshot.explanation.model,
+          });
+        }
+      }
+    } catch (err) {
+      console.error("Failed to switch underwriting profile:", err);
+    } finally {
+      setIsSyncing(false);
+    }
   };
 
   const handleOpenAppealModal = (disputeId?: string, orderId?: string) => {
@@ -490,7 +527,11 @@ export default function DashboardPage() {
           {/* TAB 2: 6 Documented Risk Signals Breakdown */}
           {(activeTab === "signals" || activeTab === "all") && signals && (
             <div className="space-y-6">
-              <SignalMeters signals={signals} />
+              <SignalMeters
+                signals={signals}
+                activeProfile={underwritingProfile}
+                onProfileChange={handleProfileChange}
+              />
             </div>
           )}
 
