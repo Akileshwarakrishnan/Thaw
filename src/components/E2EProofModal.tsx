@@ -140,7 +140,9 @@ export function E2EProofModal({
                     <Package className="h-3.5 w-3.5 text-[#367eed]" />
                     Step 1: Orders API (/v2/checkout/orders)
                   </span>
-                  <span className="text-[10px] text-emerald-700 font-extrabold">✓ PASS</span>
+                  <span className="flex items-center gap-1 text-[11px] text-emerald-700 font-bold">
+                    <CheckCircle2 className="h-3 w-3 text-emerald-600" /> Verified
+                  </span>
                 </div>
                 <div className="text-[#535963] font-mono text-[11px]">
                   Order ID: <strong className="text-[#1f2328]">{report.step1_order.orderId}</strong> | Amount: {report.step1_order.amount}
@@ -154,7 +156,9 @@ export function E2EProofModal({
                     <Truck className="h-3.5 w-3.5 text-[#367eed]" />
                     Step 2: Shipment Tracking API (/v1/shipping/trackers)
                   </span>
-                  <span className="text-[10px] text-emerald-700 font-extrabold">✓ PASS</span>
+                  <span className="flex items-center gap-1 text-[11px] text-emerald-700 font-bold">
+                    <CheckCircle2 className="h-3 w-3 text-emerald-600" /> Verified
+                  </span>
                 </div>
                 <div className="text-[#535963] font-mono text-[11px]">
                   Tracker: <strong className="text-[#1f2328]">{report.step2_tracking.trackerId}</strong> | #{report.step2_tracking.trackingNumber} ({report.step2_tracking.carrier})
@@ -168,7 +172,9 @@ export function E2EProofModal({
                     <RotateCcw className="h-3.5 w-3.5 text-amber-600" />
                     Step 3: Payments Refund API (/v2/payments/captures/refund)
                   </span>
-                  <span className="text-[10px] text-emerald-700 font-extrabold">✓ PASS</span>
+                  <span className="flex items-center gap-1 text-[11px] text-emerald-700 font-bold">
+                    <CheckCircle2 className="h-3 w-3 text-emerald-600" /> Verified
+                  </span>
                 </div>
                 <div className="text-[#535963] font-mono text-[11px]">
                   Refund ID: <strong className="text-[#1f2328]">{report.step3_refund.refundId}</strong> | Value: {report.step3_refund.refundedAmount}
@@ -182,7 +188,9 @@ export function E2EProofModal({
                     <MessageSquare className="h-3.5 w-3.5 text-purple-700" />
                     Step 4: Customer Disputes API (/v1/customer/disputes)
                   </span>
-                  <span className="text-[10px] text-emerald-700 font-extrabold">✓ PASS</span>
+                  <span className="flex items-center gap-1 text-[11px] text-emerald-700 font-bold">
+                    <CheckCircle2 className="h-3 w-3 text-emerald-600" /> Verified
+                  </span>
                 </div>
                 <div className="text-[#535963] font-mono text-[11px]">
                   Active Disputes: <strong className="text-[#1f2328]">{report.step4_disputes.disputesCount}</strong> | Sample ID: {report.step4_disputes.sampleDisputeId}
@@ -196,7 +204,9 @@ export function E2EProofModal({
                     <Globe className="h-3.5 w-3.5 text-teal-700" />
                     Step 5: Webhook Signature Verification (/v1/notifications/verify-webhook-signature)
                   </span>
-                  <span className="text-[10px] text-emerald-700 font-extrabold">✓ PASS</span>
+                  <span className="flex items-center gap-1 text-[11px] text-emerald-700 font-bold">
+                    <CheckCircle2 className="h-3 w-3 text-emerald-600" /> Verified
+                  </span>
                 </div>
                 <div className="text-[#535963] font-mono text-[11px]">
                   Transmission ID: <strong className="text-[#1f2328]">{report.step5_webhook.transmissionId}</strong> | Status: {report.step5_webhook.verificationStatus}

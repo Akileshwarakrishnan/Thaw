@@ -50,11 +50,11 @@ export function Header({
       {/* Top Announcement Bar (Statsig electric blue) */}
       <div className="bg-[#347cec] text-white h-7 sm:h-8 px-4 flex items-center justify-center text-xs font-medium tracking-tight">
         <div className="flex items-center gap-2">
-          <span className="font-bold bg-white/20 rounded-full px-2 py-0.5 text-[10px] uppercase tracking-wider">
-            PayPal AI Hackathon 2026
+          <span className="font-bold bg-white/20 rounded-full px-2.5 py-0.5 text-[10px] uppercase tracking-wider">
+            Merchant Intelligence
           </span>
-          <span className="hidden sm:inline text-white/90">
-            Deterministic 6-Signal Hold Risk Proxy Engine & Approval-Gated Agent
+          <span className="hidden sm:inline text-white/95">
+            Automated PayPal Hold Detection & Human Approval-Gated AI Remediation
           </span>
           <span className="text-white/40 hidden md:inline">|</span>
           <button
@@ -144,10 +144,10 @@ export function Header({
           <button
             onClick={onOpenTour}
             className="hidden sm:flex items-center gap-1.5 rounded-full border border-[#d4d7dc] bg-white px-3 py-1.5 text-xs font-semibold text-[#1f2328] hover:bg-[#f6f6f6] hover:border-[#367eed] transition-all shadow-xs"
-            title="30-Second Guided Tour for Hackathon Judges"
+            title="Interactive Guided Product Tour"
           >
             <Sparkles className="h-3.5 w-3.5 text-[#367eed] shrink-0" />
-            <span>30s Tour</span>
+            <span>Product Tour</span>
           </button>
 
           <button

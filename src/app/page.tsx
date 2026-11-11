@@ -342,14 +342,14 @@ export default function DashboardPage() {
                 }}
                 className="rounded-full bg-[#1f2328] hover:bg-[#343941] text-white px-6 py-3 text-sm font-semibold shadow-sm transition-all"
               >
-                Test Drifting Store Demo (63/100)
+                Inspect Active Account (63/100 Risk)
               </button>
               <button
                 onClick={() => setIsTourOpen(true)}
                 className="rounded-full bg-white hover:bg-[#f6f6f6] text-[#1f2328] border border-[#d4d7dc] px-6 py-3 text-sm font-semibold shadow-sm transition-all flex items-center gap-2"
               >
                 <Sparkles className="h-4 w-4 text-[#367eed]" />
-                30-Second Guided Tour
+                Executive Tour
               </button>
               <button
                 onClick={() => setIsE2EProofOpen(true)}
@@ -580,7 +580,7 @@ export default function DashboardPage() {
             </span>
           </div>
           <span className="text-xs text-[#535963]">
-            Open-source MIT License • PayPal AI Hackathon 2026
+            Open-source MIT License • Enterprise Underwriting Intelligence for PayPal Merchants
           </span>
         </div>
       </footer>

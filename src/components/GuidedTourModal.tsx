@@ -41,10 +41,10 @@ export function GuidedTourModal({
             </div>
             <div>
               <h3 className="text-base font-bold text-[#1f2328]">
-                Thaw: 30-Second Judge Walkthrough
+                Thaw: Executive Product Tour
               </h3>
               <p className="text-xs text-[#535963]">
-                How Thaw stops surprise PayPal cash freezes before they happen
+                Continuous hold risk prevention and cash-flow defense for merchants
               </p>
             </div>
           </div>
@@ -89,8 +89,11 @@ export function GuidedTourModal({
                 Notice the <strong>Hold Risk Gauge</strong> showing <strong>63/100 (Medium Risk)</strong>.
                 Unlike PayPal (which gives zero advance warning before placing accounts in hold), Thaw scores your store continuously across 6 documented trigger signals.
               </p>
-              <div className="rounded-[8px] bg-white p-3 border border-[#d4d7dc] text-xs text-[#1f2328]">
-                💰 <strong>Cash-Flow Shield:</strong> Identifies that <strong>$303.40 (10% rolling reserve)</strong> is at risk of being frozen for 21 days.
+              <div className="rounded-[8px] bg-white p-3 border border-[#d4d7dc] text-xs text-[#1f2328] flex items-center gap-2">
+                <DollarSign className="h-4 w-4 text-[#367eed] shrink-0" />
+                <span>
+                  <strong>Cash-Flow Shield:</strong> Identifies that <strong>$303.40 (10% rolling reserve)</strong> is at risk of being frozen for 21 days.
+                </span>
               </div>
             </div>
           )}
@@ -122,8 +125,11 @@ export function GuidedTourModal({
                 The AI agent drafts the required remediations, but <strong>zero money or data moves without your explicit approval</strong>.
                 When you click <strong>Approve & Execute</strong>:
               </p>
-              <div className="rounded-[8px] bg-emerald-50 border border-emerald-300 p-3 text-xs text-emerald-900 font-medium">
-                ✓ Executed via <strong>@paypal/agent-toolkit</strong> $\rightarrow$ Tracking is dispatched to PayPal $\rightarrow$ Risk Score drops $\rightarrow$ Held funds are released!
+              <div className="rounded-[8px] bg-emerald-50 border border-emerald-300 p-3 text-xs text-emerald-900 font-medium flex items-center gap-2">
+                <CheckCircle2 className="h-4 w-4 text-emerald-700 shrink-0" />
+                <span>
+                  Dispatched via <strong>@paypal/agent-toolkit</strong> &rarr; Tracking telemetry verified by PayPal &rarr; Risk score drops &rarr; Cleared funds remain withdrawable.
+                </span>
               </div>
             </div>
           )}

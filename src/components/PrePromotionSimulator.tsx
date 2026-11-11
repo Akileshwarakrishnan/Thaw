@@ -114,8 +114,9 @@ export function PrePromotionSimulator({
           </div>
 
           {submitted ? (
-            <div className="rounded-full bg-emerald-100 border border-emerald-300 p-2 text-center text-xs font-bold text-emerald-800">
-              ✓ Pre-Notification Dispatched to PayPal Underwriting!
+            <div className="rounded-full bg-emerald-100 border border-emerald-300 p-2 text-center text-xs font-bold text-emerald-800 flex items-center justify-center gap-1.5">
+              <CheckCircle2 className="h-3.5 w-3.5 text-emerald-700" />
+              Pre-Notification Dispatched to PayPal Underwriting
             </div>
           ) : (
             <button
