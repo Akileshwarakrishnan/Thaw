@@ -13,6 +13,7 @@ import {
   Sparkles,
   Shield,
   ExternalLink,
+  Film,
 } from "lucide-react";
 
 interface HeaderProps {
@@ -24,6 +25,7 @@ interface HeaderProps {
   onOpenConnectModal: () => void;
   onOpenTour: () => void;
   onOpenE2EProof: () => void;
+  onOpenVideoModal?: () => void;
   isSyncing: boolean;
   isSwitching: boolean;
 }
@@ -37,6 +39,7 @@ export function Header({
   onOpenConnectModal,
   onOpenTour,
   onOpenE2EProof,
+  onOpenVideoModal,
   isSyncing,
   isSwitching,
 }: HeaderProps) {
@@ -141,6 +144,17 @@ export function Header({
 
         {/* Right: Primary Action Utilities (Guaranteed single-row, no truncation) */}
         <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
+          {onOpenVideoModal && (
+            <button
+              onClick={onOpenVideoModal}
+              className="hidden lg:flex items-center gap-1.5 rounded-full border border-[#d4d7dc] bg-[#1f2328] px-3 py-1.5 text-xs font-bold text-white hover:bg-[#343941] transition-all shadow-xs"
+              title="Watch Official 1080p Demo Video"
+            >
+              <Film className="h-3.5 w-3.5 text-emerald-400 shrink-0" />
+              <span>Demo Video</span>
+            </button>
+          )}
+
           <button
             onClick={onOpenTour}
             className="hidden sm:flex items-center gap-1.5 rounded-full border border-[#d4d7dc] bg-white px-3 py-1.5 text-xs font-semibold text-[#1f2328] hover:bg-[#f6f6f6] hover:border-[#367eed] transition-all shadow-xs"

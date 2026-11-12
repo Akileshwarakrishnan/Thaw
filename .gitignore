@@ -41,3 +41,12 @@ next-env.d.ts
 /prisma/*.db-journal
 dev.db
 dev.db-journal
+
+# Video and test scratch artifacts
+video_build/
+*.mp3
+test-*.png
+real-app-*.png
+public/test-*.png
+public/test-*.mp3
+__pycache__/

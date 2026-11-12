@@ -16,6 +16,7 @@ import { AppealModal } from "@/components/AppealModal";
 import { ConnectModal } from "@/components/ConnectModal";
 import { GuidedTourModal } from "@/components/GuidedTourModal";
 import { E2EProofModal } from "@/components/E2EProofModal";
+import { DemoVideoModal } from "@/components/DemoVideoModal";
 import { RiskBand, RiskSignalsBreakdown, CashFlowMetrics } from "@/lib/risk/types";
 import { UnderwritingProfile } from "@/lib/risk/engine";
 import {
@@ -32,6 +33,7 @@ import {
   History,
   LayoutGrid,
   Play,
+  Film,
   ArrowRight,
   TrendingDown,
 } from "lucide-react";
@@ -89,6 +91,7 @@ export default function DashboardPage() {
   const [isConnectOpen, setIsConnectOpen] = useState(false);
   const [isTourOpen, setIsTourOpen] = useState(false);
   const [isE2EProofOpen, setIsE2EProofOpen] = useState(false);
+  const [isVideoOpen, setIsVideoOpen] = useState(false);
 
   // Fetch all dashboard data
   const loadDashboardData = useCallback(async () => {
@@ -318,6 +321,7 @@ export default function DashboardPage() {
           onOpenConnectModal={() => setIsConnectOpen(true)}
           onOpenTour={() => setIsTourOpen(true)}
           onOpenE2EProof={() => setIsE2EProofOpen(true)}
+          onOpenVideoModal={() => setIsVideoOpen(true)}
           isSyncing={isSyncing}
           isSwitching={isSwitching}
         />
@@ -336,17 +340,24 @@ export default function DashboardPage() {
             {/* Statsig-style Hero CTAs */}
             <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
               <button
+                onClick={() => setIsVideoOpen(true)}
+                className="rounded-full bg-[#1f2328] hover:bg-[#343941] text-white px-6 py-3 text-sm font-bold shadow-sm transition-all flex items-center gap-2"
+              >
+                <Film className="h-4 w-4 text-emerald-400" />
+                Watch Demo Video
+              </button>
+              <button
                 onClick={() => {
                   handleSwitchScenario("drifting");
                   setActiveTab("shield");
                 }}
-                className="rounded-full bg-[#1f2328] hover:bg-[#343941] text-white px-6 py-3 text-sm font-semibold shadow-sm transition-all"
+                className="rounded-full bg-white hover:bg-[#f6f6f6] text-[#1f2328] border border-[#d4d7dc] px-6 py-3 text-sm font-semibold shadow-sm transition-all"
               >
                 Inspect Active Account (63/100 Risk)
               </button>
               <button
                 onClick={() => setIsTourOpen(true)}
-                className="rounded-full bg-white hover:bg-[#f6f6f6] text-[#1f2328] border border-[#d4d7dc] px-6 py-3 text-sm font-semibold shadow-sm transition-all flex items-center gap-2"
+                className="rounded-full bg-white hover:bg-[#f6f6f6] text-[#1f2328] border border-[#d4d7dc] px-5 py-3 text-sm font-semibold shadow-sm transition-all flex items-center gap-2"
               >
                 <Sparkles className="h-4 w-4 text-[#367eed]" />
                 Executive Tour
@@ -619,6 +630,12 @@ export default function DashboardPage() {
         isOpen={isE2EProofOpen}
         onClose={() => setIsE2EProofOpen(false)}
         onRefreshDashboard={() => loadDashboardData()}
+      />
+
+      {/* Official 1080p Demo Video Modal */}
+      <DemoVideoModal
+        isOpen={isVideoOpen}
+        onClose={() => setIsVideoOpen(false)}
       />
     </div>
   );
