@@ -107,6 +107,25 @@ next.js, typescript, paypal, paypal-api, agent-toolkit, mcp, prisma, sqlite, tai
 
 ---
 
+## 🖼️ Project Media: Image Gallery (3:2 Ratio, 1800×1200)
+
+Devpost allows up to 15 images in JPG, PNG, or GIF format (5 MB max per file, 3:2 ratio).  
+We have generated **9 high-definition, pixel-perfect 3:2 ratio screenshots** in `public/devpost-gallery/`. Upload these files directly to the Devpost **Image gallery**:
+
+| # | Image File | Suggested Devpost Caption | File Size |
+|---|---|---|---|
+| **1** | `public/devpost-gallery/01-thaw-hero-overview.png` | **Thaw Overview:** Early-warning & cash-flow shield with active scenario selector | 239 KB |
+| **2** | `public/devpost-gallery/02-risk-gauge-cash-flow-shield.png` | **Hold Risk Gauge & Cash-Flow Shield:** 63/100 Medium Risk with $303 rolling reserve exposure | 247 KB |
+| **3** | `public/devpost-gallery/03-ai-risk-diagnosis.png` | **AI Risk Diagnosis:** Plain-language breakdown of missing tracking, dispute velocity & address mismatches | 240 KB |
+| **4** | `public/devpost-gallery/04-action-queue-weight-badges.png` | **Action Queue:** Prioritized remediations featuring deterministic Weight Impact Badges (-6 pts) | 240 KB |
+| **5** | `public/devpost-gallery/05-action-executed-score-drop.png` | **Hero Moment:** Human approval-gated dispatch drops risk from 63 to 57 in real-time | 235 KB |
+| **6** | `public/devpost-gallery/06-paypal-sandbox-5-step-proof.png` | **Sandbox Telemetry Suite:** Real 5-step verification across PayPal REST APIs | 343 KB |
+| **7** | `public/devpost-gallery/07-pre-promotion-simulator.png` | **Pre-Promotion Simulator:** Flash sale 2.5x velocity model & underwriting defense packet | 273 KB |
+| **8** | `public/devpost-gallery/08-auto-drafted-dispute-appeal.png` | **Legal Dispute Drafter:** Auto-drafted evidence under PayPal Seller Protection Policy §3 | 272 KB |
+| **9** | `public/devpost-gallery/09-orders-underwriting-ledger.png` | **Orders Ledger:** Real-time tracking verification and Seller Protection compliance status | 286 KB |
+
+---
+
 ## 🎬 Demo Video Details (For YouTube Upload)
 
 The official 1080p demo video is generated and ready in your repository:
