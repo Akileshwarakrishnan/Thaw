@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { Zap, AlertTriangle, ArrowRight, ShieldCheck, Mail, Send } from "lucide-react";
+import { Zap, AlertTriangle, ArrowRight, ShieldCheck, Mail, Send, CheckCircle2 } from "lucide-react";
 
 interface PrePromotionSimulatorProps {
   currentWeeklyVolume: number;
