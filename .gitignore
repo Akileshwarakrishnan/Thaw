@@ -37,10 +37,9 @@ yarn-error.log*
 next-env.d.ts
 
 # SQLite database
-/prisma/*.db
 /prisma/*.db-journal
-dev.db
-dev.db-journal
+/dev.db
+/dev.db-journal
 
 # Submission package and archives
 *.zip
