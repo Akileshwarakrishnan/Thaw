@@ -120,6 +120,13 @@ export function DemoVideoModal({ isOpen, onClose }: DemoVideoModalProps) {
                 className="w-full h-full object-contain"
                 src={currentVideoSrc}
               >
+                <track
+                  label="English Captions"
+                  kind="subtitles"
+                  srcLang="en"
+                  src="/thaw-demo-video.vtt"
+                  default
+                />
                 Your browser does not support the video tag.
               </video>
             </div>

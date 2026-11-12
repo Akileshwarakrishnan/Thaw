@@ -1,0 +1,108 @@
+1
+00:00:00,100 --> 00:00:13,100
+Every single month, thousands of profitable e-commerce merchants wake up to a devastating email from PayPal: Your account has been placed on a 21-day hold, or a rolling reserve.
+
+2
+00:00:13,050 --> 00:00:16,987
+In an instant, incoming revenue is frozen.
+
+3
+00:00:16,987 --> 00:00:21,787
+Merchants cannot pay suppliers, and payroll is paralyzed.
+
+4
+00:00:21,787 --> 00:00:29,250
+Worst of all, PayPal risk algorithms never disclose why until it is already too late.
+
+5
+00:00:29,250 --> 00:00:36,187
+This is Thaw: the early-warning and cash-flow shield built specifically for PayPal sellers.
+
+6
+00:00:36,187 --> 00:00:41,325
+Our promise is simple: Know before PayPal freezes your money.
+
+7
+00:00:42,076 --> 00:00:52,513
+Instead of leaving merchants in the dark, Thaw continuously analyzes seller account telemetry across six publicly documented underwriting triggers.
+
+8
+00:00:52,463 --> 00:01:01,601
+In this live store, our Hold Risk Gauge is sitting at 63 out of 100, in the Medium Risk drifting band.
+
+9
+00:01:01,601 --> 00:01:21,101
+Down in the Cash-Flow Shield, Thaw immediately reveals the financial reality: out of 5,400 dollars in sales, exactly 303 dollars is vulnerable to a 10 percent rolling reserve, locked for up to 21 days by PayPals automated risk bots.
+
+10
+00:01:21,868 --> 00:01:24,568
+Why is this account drifting?
+
+11
+00:01:24,518 --> 00:01:46,780
+Thaws AI engine analyzes the deterministic risk signals and breaks them down into plain, actionable English: 14 physical orders dispatched over three days ago are completely missing carrier tracking numbers, and customer dispute rates are trending upward toward the critical 1.5 percent threshold.
+
+12
+00:01:46,780 --> 00:01:52,543
+In the Action Queue, our agent proposes ranked, prioritized solutions.
+
+13
+00:01:52,543 --> 00:02:02,280
+Notice the Weight Impact Badge: fulfilling this action removes 6 risk points directly from the missing tracking trigger upon dispatch.
+
+14
+00:02:03,052 --> 00:02:08,539
+Now, here is our core philosophy: Strict Human-in-the-Loop Guardrails.
+
+15
+00:02:08,489 --> 00:02:16,539
+The AI proposes actions, but zero money and zero tracking moves without explicit merchant approval.
+
+16
+00:02:16,539 --> 00:02:26,989
+When the merchant clicks Approve and Execute, the remediation is dispatched instantly through the PayPal Agent Toolkit using Model Context Protocol tools.
+
+17
+00:02:26,989 --> 00:02:33,102
+Carrier tracking is submitted directly to PayPals live Shipment Tracking API.
+
+18
+00:02:33,102 --> 00:02:44,339
+Immediately, our risk engine re-evaluates: the risk score drops by 6 points, the cash-flow shield updates, and held funds are cleared for withdrawal.
+
+19
+00:02:45,100 --> 00:02:48,937
+Merchants can also hedge against future risk.
+
+20
+00:02:48,887 --> 00:03:04,287
+With our Pre-Promotion Simulator, sellers planning a flash sale can simulate a 2.5 times volume spike and generate pre-notification documentation for PayPal underwriting to prevent automated velocity freezes.
+
+21
+00:03:04,287 --> 00:03:07,225
+And everything you see is real.
+
+22
+00:03:07,225 --> 00:03:26,487
+In our Sandbox Proof suite, Thaw executes an authentic five-step verification cycle across PayPals live REST APIs: creating real orders, uploading real shipment trackers, executing refunds, reading disputes, and cryptographically verifying webhook signatures.
+
+23
+00:03:27,244 --> 00:03:42,269
+Under the hood, Thaw is built on Next.js 14, TypeScript, Prisma, and Zod schema validation, backed by 21 automated unit tests with strict idempotency and refund cap safeguards.
+
+24
+00:03:42,219 --> 00:03:44,606
+PayPal protects buyers.
+
+25
+00:03:44,606 --> 00:03:46,844
+Thaw protects merchants.
+
+26
+00:03:46,844 --> 00:03:50,044
+Know before PayPal freezes your money.
+
+27
+00:03:50,044 --> 00:03:51,469
+Thank you.
+
