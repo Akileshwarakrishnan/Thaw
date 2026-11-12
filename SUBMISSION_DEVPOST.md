@@ -1,0 +1,191 @@
+# 🏆 THAW — Official Devpost Submission Master Kit
+
+> **Event:** PayPal AI Hackathon 2026  
+> **Project Name:** Thaw  
+> **Tagline:** Early-warning & cash-flow shield built for PayPal sellers. Know before PayPal freezes your money.  
+> **Submission Deadline:** November 12, 2026 at 12:00 PM Pacific (Nov 13, 1:30 AM IST)  
+> **License:** MIT Open-Source License (included in repository)  
+
+---
+
+## 📋 Quick Copy-Paste Devpost Form Fields
+
+### 1. Project Title & Tagline
+* **Project Name:**
+  ```text
+  Thaw
+  ```
+* **Elevator Pitch / Tagline (under 60 characters):**
+  ```text
+  Know before PayPal freezes your merchant cash flow.
+  ```
+* **Extended Tagline:**
+  ```text
+  Early-warning hold risk intelligence and human approval-gated AI remediation for PayPal sellers.
+  ```
+
+---
+
+### 2. Built With (Tags / Technologies)
+Copy-paste these tags into the **"Built With"** field on Devpost:
+```text
+next.js, typescript, paypal, paypal-api, agent-toolkit, mcp, prisma, sqlite, tailwindcss, vitest, zod, gemini-api, artificial-intelligence, fintech
+```
+
+---
+
+### 3. About the Project (Devpost Story Section)
+
+#### 💡 Inspiration
+> For e-commerce merchants relying on PayPal, cash flow is survival. Yet every month, thousands of thriving sellers wake up to a devastating automated email:
+>
+> *"Your account has been placed on a 21-day hold, or a rolling reserve."*
+>
+> Automated risk algorithms detect fulfillment delays, sudden promotional sales spikes, or rising dispute velocity—and unilaterally lock 10% to 30% of incoming revenue to protect buyers. Worse, PayPal's automated emails never explain the root causes or which specific orders triggered the freeze. Merchants cannot pay suppliers, payroll is paralyzed, and healthy businesses collapse from sudden cash-flow starvation.
+>
+> **We built Thaw to solve this universal merchant dilemma.**
+>
+> PayPal protects buyers. **Thaw protects merchants.** Our promise is simple: **Know before PayPal freezes your money.**
+
+---
+
+#### 🚀 What It Does
+> **Thaw** is an enterprise-grade early-warning and cash-flow shield built specifically for PayPal sellers:
+>
+> 1. **Deterministic 6-Signal Hold Risk Proxy Engine:** Evaluates merchant telemetry on a 0–100 scale across six publicly documented PayPal underwriting triggers: Missing Carrier Tracking (weight: 25), Dispute Rate Velocity (weight: 30), Sales Velocity Spikes (weight: 20), Address Mismatch (weight: 10), Refund Velocity (weight: 10), and Impending Dispute Deadlines (weight: 5).
+> 2. **Dynamic Cash-Flow Shield:** Immediately quantifies the exact financial exposure—differentiating cleared, unrestricted funds from rolling reserve vulnerability (10% Medium Risk, 30% High Risk) based on trailing 14-day sales.
+> 3. **Plain-Language AI Diagnosis:** Uses structured Gemini AI to translate complex database metrics into plain English, identifying the exact offending orders and explaining why the account is drifting.
+> 4. **Human Approval-Gated Action Queue:** Our AI agent proposes prioritized remediations with exact **Weight Impact Badges** (e.g., uploading tracking removes `-6 points` directly). Following strict FinTech guardrails, zero money and zero tracking moves without explicit merchant approval.
+> 5. **Instant Remediation via PayPal Agent Toolkit:** When approved, actions are dispatched through the PayPal Agent Toolkit (@paypal/agent-toolkit MCP) to PayPal's live Shipment Tracking and Disputes APIs, immediately reducing risk score and unlocking held reserves.
+> 6. **Pre-Promotion Flash Sale Simulator:** Allows merchants to simulate upcoming marketing spikes (e.g., 2.5x holiday velocity) and generate underwriting pre-notification packets to prevent automated velocity freezes.
+> 7. **100% Real PayPal Sandbox Proof Suite:** Executes an authentic 5-step verification cycle across PayPal's official REST APIs (Orders, Shipment Tracking, Payments Refund, Disputes, and Webhook signature verification).
+
+---
+
+#### 🛠️ How We Built It
+> - **Frontend:** Next.js 14 App Router, TypeScript, Tailwind CSS, Statsig-inspired clean design system, dynamic SVG risk gauge, and Geist typography.
+> - **Backend & Risk Core:** Next.js API Routes running a pure deterministic mathematical model for risk scoring (math is 100% code-gated, never hallucinated by AI).
+> - **AI Intelligence:** Gemini 1.5 Flash server-side with strict **Zod schema validation** for structured JSON output (`RiskExplanationSchema`, `ProposedActionItemSchema`, `DisputeAppealSchema`).
+> - **Database & Audit Trail:** Prisma ORM with SQLite (local) and PostgreSQL (production), featuring immutable SHA-256 audit logs and unique constraint idempotency.
+> - **PayPal Integration:** Live PayPal Sandbox REST APIs paired with `@paypal/agent-toolkit` (Model Context Protocol).
+> - **Test Suite:** Vitest running 21 automated unit and integration tests with 100% passing coverage.
+
+---
+
+#### 🛡️ Challenges We Ran Into
+> 1. **Preventing AI Hallucinations in Financial Operations:** We refused to let an LLM calculate risk scores or blindly transfer funds. We solved this by creating a strict architectural separation: the risk score and database mutations are 100% deterministic code. The AI is used exclusively for plain-language translation, legal appeal drafting, and action proposal.
+> 2. **Human-in-the-Loop Safety Guardrails:** Ensuring actions can never be triggered accidentally or twice. We engineered database idempotency locks, refund balance cap safeguards, and an immutable audit trail.
+> 3. **Real vs. Simulated Transparency:** To provide complete honesty for judges, every order and action displays a visible **🟢 LIVE SANDBOX** or **🟡 SIMULATED** telemetry badge.
+
+---
+
+#### 🏆 Accomplishments That We're Proud Of
+> - **21/21 Automated Tests Passing:** Complete test coverage across risk math, idempotency, refund limits, foreign key integrity, and PayPal Sandbox proof.
+> - **Zero Overlays / Clean Presentation:** Rebuilt our demo video to show 100% authentic application screen recordings with an articulate South Indian English voiceover.
+> - **Zero-Setup Demo Mode:** Judges can test all 3 scenarios (`Healthy`, `Drifting`, `Post-Spike`) in their browser with zero configuration or API keys required.
+> - **1-Click Remediation Feedback Loop:** Approving an action immediately uploads tracking to PayPal and triggers real-time score reduction in front of the judge's eyes.
+
+---
+
+#### 📚 What We Learned
+> - The exact mathematical mechanics of PayPal's merchant underwriting policies, Seller Protection §3 requirements, and defect rate thresholds (1.5% dispute ceiling).
+> - How to build agentic workflows using the Model Context Protocol (MCP) and `@paypal/agent-toolkit`.
+> - How to build FinTech UX that feels trustworthy, spacious, and calming using the Statsig design system.
+
+---
+
+#### 🔮 What's Next for Thaw
+> - **Direct Buyer Inquiry Ingestion:** Resolve customer questions before they turn into official dispute defects.
+> - **Official PayPal Underwriting Integration:** Automatically submit verified logistics packets directly to PayPal underwriting for instant rolling reserve release.
+> - **Multi-Account Merchant Shield:** Unified cash-flow protection across multiple PayPal merchant accounts for enterprise sellers.
+
+---
+
+#### ⚠️ Honest Limitation Statement
+> **PayPal's actual underwriting risk models are strictly proprietary.**  
+> Thaw is an intelligent early-warning proxy engineered from publicly documented triggers, dispute velocity policies, and merchant protection guidelines. It is not an internal replica of PayPal's private risk algorithms.
+
+---
+
+## 🎬 Demo Video Details (For YouTube Upload)
+
+The official 1080p demo video is generated and ready in your repository:
+- **Local File Path:** `public/thaw-demo-video.mp4`
+- **Duration:** 3 minutes 48 seconds
+- **Resolution:** 1080p Full HD (1920 × 1080)
+- **Voiceover:** South Indian English Narration (`en-IN-PrabhatNeural`)
+
+### Recommended YouTube Upload Settings:
+* **Video Title:**
+  ```text
+  Thaw — Early-Warning & Cash-Flow Shield Built for PayPal Sellers (PayPal AI Hackathon 2026)
+  ```
+* **Video Description:**
+  ```text
+  Thaw detects PayPal hold risk before funds freeze. Built for the PayPal AI Hackathon 2026.
+  
+  Timestamps:
+  0:00 - The Problem: Unexpected 21-Day Holds & Frozen Cash Flow
+  0:42 - Live Hold Risk Gauge (63/100) & Cash-Flow Shield ($303 At-Risk)
+  1:22 - AI Root-Cause Diagnosis & Action Queue with Weight Badges
+  2:03 - The Hero Moment: Human Approval-Gated Dispatch via PayPal Agent Toolkit
+  2:45 - Proactive Flash Sale Simulator & 5-Step Real PayPal Sandbox Proof
+  3:27 - Enterprise FinTech Architecture & 21/21 Passing Tests
+  
+  GitHub: https://github.com/your-username/thaw
+  Built with Next.js 14, TypeScript, Prisma, @paypal/agent-toolkit, and Gemini AI.
+  ```
+* **Category:** Science & Technology
+* **Visibility:** Public or Unlisted (Both work on Devpost)
+
+---
+
+## 🧪 Testing Instructions for Judges
+
+Judges can test the full application locally in under 2 minutes:
+
+```bash
+# 1. Clone repository
+git clone https://github.com/your-username/thaw.git
+cd thaw
+
+# 2. Install dependencies
+npm install
+
+# 3. Seed database to default "Drifting" scenario (63/100 risk score)
+npm run seed
+
+# 4. Start local development server
+npm run dev
+```
+
+### 2-Minute Judge Evaluation Walkthrough:
+1. Open **[http://localhost:3000](http://localhost:3000)** in your browser.
+2. **Observe the Risk Gauge:** Notice the Hold Risk score of **63/100** (Medium Risk) and the **Cash-Flow Shield** showing **$303.40 at risk** (10% rolling reserve).
+3. **Review AI Diagnosis:** Scroll down to the AI Risk Diagnosis panel to view the plain-English breakdown of missing tracking and rising disputes.
+4. **Execute Hero Remediation:** In the Action Queue, click **"Approve & Execute"** on the first action (`Upload Proof of Shipment for Order #5O987112001`). Notice:
+   - The green dispatch alert banner appears (*"Remediation dispatched to PayPal successfully · Dropped 6 points"*).
+   - The Risk Gauge drops dynamically from **63 ➔ 57 / 100**.
+   - Held reserve funds update in real time.
+5. **Verify Real PayPal Sandbox APIs:** Click **"Verify Sandbox Proof"** in the top navbar to inspect the 5-step verification cycle (Orders, Tracking, Refunds, Disputes, and Webhook signature verification).
+6. **Test Marketing Spike Simulator:** Click the **"Pre-Promotion Simulator"** tab to simulate a 2.5x flash sale velocity increase (+18 pts risk) and preview the underwriting documentation packet.
+7. **Run Automated Test Suite:** In your terminal, run:
+   ```bash
+   npm test
+   ```
+   All **21 unit and integration tests** will pass with green checkmarks.
+
+---
+
+## ✅ Pre-Submission Final Verification Checklist
+
+- [x] Project runs locally without errors (`npm run dev`)
+- [x] All 21 Vitest tests passing (`npm test`)
+- [x] Database seeded to clean Drifting scenario (`npm run seed`)
+- [x] Demo video rendered in 1080p Full HD (`public/thaw-demo-video.mp4`)
+- [x] South Indian English voiceover active
+- [x] Zero overlapping templates or AI-slop visual boxes
+- [x] In-app video player & download modal operational
+- [x] Open-source MIT License present in root (`LICENSE`)
+- [x] Clean Git commit history conceiving project after Oct 1, 2026
+- [x] Honest limitation clearly stated across README, UI, and video
