@@ -5,6 +5,7 @@
 > **Built for:** PayPal AI Hackathon 2026
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Live Demo: Vercel](https://img.shields.io/badge/Live%20Demo-thaw--2pa8.vercel.app-success.svg)](https://thaw-2pa8.vercel.app)
 [![Demo Video: YouTube](https://img.shields.io/badge/YouTube-Watch%20Demo%20Video-red.svg)](https://youtu.be/om5k2e5uxz0)
 [![Built with Next.js](https://img.shields.io/badge/Next.js-14.2-black.svg)](https://nextjs.org/)
 [![Database: SQLite / Prisma](https://img.shields.io/badge/ORM-Prisma-2D3748.svg)](https://www.prisma.io/)

@@ -10,6 +10,20 @@
 
 ## 📋 Quick Copy-Paste Devpost Form Fields
 
+### 0. Working Demo / Hosted Application URL
+* **Hosted Application / Live Demo:**
+  ```text
+  https://thaw-2pa8.vercel.app
+  ```
+* **GitHub Repository URL:**
+  ```text
+  https://github.com/Akileshwarakrishnan/Thaw.git
+  ```
+* **YouTube Video Demo:**
+  ```text
+  https://youtu.be/om5k2e5uxz0
+  ```
+
 ### 1. Project Title & Tagline
 * **Project Name:**
   ```text
