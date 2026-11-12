@@ -42,6 +42,9 @@ next-env.d.ts
 dev.db
 dev.db-journal
 
+# Submission package and archives
+*.zip
+
 # Video and test scratch artifacts
 video_build/
 *.mp3
