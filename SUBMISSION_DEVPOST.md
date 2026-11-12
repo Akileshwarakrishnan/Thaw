@@ -126,36 +126,18 @@ We have generated **9 high-definition, pixel-perfect 3:2 ratio screenshots** in 
 
 ---
 
-## 🎬 Demo Video Details (For YouTube Upload)
+## 🎬 Demo Video Details
 
-The official 1080p demo video is generated and ready in your repository:
-- **Local File Path:** `public/thaw-demo-video.mp4`
-- **Duration:** 3 minutes 48 seconds
-- **Resolution:** 1080p Full HD (1920 × 1080)
-- **Voiceover:** South Indian English Narration (`en-IN-PrabhatNeural`)
+* **Live YouTube URL:** [https://youtu.be/om5k2e5uxz0](https://youtu.be/om5k2e5uxz0)
+* **Local Master File:** `public/thaw-demo-video.mp4`
+* **Duration:** 3 minutes 48 seconds (1080p Full HD)
+* **Voiceover:** South Indian English Narration (`en-IN-PrabhatNeural`)
+* **Subtitles:** Line-by-line synchronized captions burned into video + master `.srt` file included
 
-### Recommended YouTube Upload Settings:
-* **Video Title:**
-  ```text
-  Thaw — Early-Warning & Cash-Flow Shield Built for PayPal Sellers (PayPal AI Hackathon 2026)
-  ```
-* **Video Description:**
-  ```text
-  Thaw detects PayPal hold risk before funds freeze. Built for the PayPal AI Hackathon 2026.
-  
-  Timestamps:
-  0:00 - The Problem: Unexpected 21-Day Holds & Frozen Cash Flow
-  0:42 - Live Hold Risk Gauge (63/100) & Cash-Flow Shield ($303 At-Risk)
-  1:22 - AI Root-Cause Diagnosis & Action Queue with Weight Badges
-  2:03 - The Hero Moment: Human Approval-Gated Dispatch via PayPal Agent Toolkit
-  2:45 - Proactive Flash Sale Simulator & 5-Step Real PayPal Sandbox Proof
-  3:27 - Enterprise FinTech Architecture & 21/21 Passing Tests
-  
-  GitHub: https://github.com/your-username/thaw
-  Built with Next.js 14, TypeScript, Prisma, @paypal/agent-toolkit, and Gemini AI.
-  ```
-* **Category:** Science & Technology
-* **Visibility:** Public or Unlisted (Both work on Devpost)
+Paste this URL into the **"Video Demo"** field on Devpost:
+```text
+https://youtu.be/om5k2e5uxz0
+```
 
 ---
 
@@ -165,8 +147,8 @@ Judges can test the full application locally in under 2 minutes:
 
 ```bash
 # 1. Clone repository
-git clone https://github.com/your-username/thaw.git
-cd thaw
+git clone https://github.com/Akileshwarakrishnan/Thaw.git
+cd Thaw
 
 # 2. Install dependencies
 npm install

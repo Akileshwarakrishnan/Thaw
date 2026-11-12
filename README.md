@@ -5,6 +5,7 @@
 > **Built for:** PayPal AI Hackathon 2026
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Demo Video: YouTube](https://img.shields.io/badge/YouTube-Watch%20Demo%20Video-red.svg)](https://youtu.be/om5k2e5uxz0)
 [![Built with Next.js](https://img.shields.io/badge/Next.js-14.2-black.svg)](https://nextjs.org/)
 [![Database: SQLite / Prisma](https://img.shields.io/badge/ORM-Prisma-2D3748.svg)](https://www.prisma.io/)
 [![PayPal Sandbox](https://img.shields.io/badge/PayPal-Sandbox%20REST%20APIs-0070BA.svg)](https://developer.paypal.com/)
@@ -210,8 +211,8 @@ Judges can toggle between 3 realistic store scenarios in the UI with a single cl
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/your-username/thaw.git
-cd thaw
+git clone https://github.com/Akileshwarakrishnan/Thaw.git
+cd Thaw
 
 # 2. Install dependencies
 npm install
@@ -286,15 +287,18 @@ In a production partnership with PayPal, Thaw would evolve from an outside-in pr
 
 ---
 
-## 12. 3-Minute Demo Video Script
+## 12. Official Product Demo Video
 
-| Timestamp | Scene | Audio / Narrative |
+> 📺 **Watch the Official 1080p Walkthrough on YouTube:** [https://youtu.be/om5k2e5uxz0](https://youtu.be/om5k2e5uxz0)
+
+| Timestamp | Scene | Key Feature Demonstrated |
 |---|---|---|
-| **0:00 – 0:35** | Problem & Hook | "For PayPal merchants, cash flow is survival. But PayPal won't tell you why your funds get frozen. Meet Priya: sales are up, but a sudden 21-day reserve locked $8,000 of her money. Thaw solves this: know before PayPal freezes your cash." |
-| **0:35 – 1:10** | Walkthrough & Drifting Store | "Opening Thaw: one headline, the Hold Risk Gauge showing 63/100 (Medium Risk), and $303.40 at risk. The AI Diagnosis explains why: 14 shipments missing tracking, address mismatches voiding Seller Protection, and 1 urgent dispute." |
-| **1:10 – 2:05** | Approval & Agentic Drop | "Look at the Action Queue: AI proposes solutions, but zero money moves without human approval. We click 'Approve & Execute' on Order #ORD-DRIFT-1010. Dispatched via PayPal Agent Toolkit: tracking uploads, and watch the score drop from 63 to 51! Available cash updates in real time." |
-| **2:05 – 2:35** | Real Sandbox Proof & Pre-Promotion | "Thaw isn't mockups: click 'PayPal Proof' to see real Orders, Tracking, Refunds, Disputes, and Webhooks run live. Plus, test upcoming holiday sales with the Pre-Promotion Simulator to notify PayPal before big sales." |
-| **2:35 – 3:00** | Architecture & Honest Limitation | "One slide on architecture: deterministic engine, approval-gated agent, and our honest limitation: PayPal's proprietary model is private; Thaw is an intelligent proxy built on documented rules to keep merchants solvent. Built for PayPal sellers." |
+| **0:00 – 0:42** | Problem & Hook | Unannounced 21-day holds & $1.2B frozen annual merchant capital |
+| **0:42 – 1:22** | Live Hold Risk Gauge | 63/100 Medium Risk score & $303.40 at-risk reserve quantification |
+| **1:22 – 2:03** | AI Root-Cause Diagnosis | Plain-language breakdown & Action Queue with Weight Impact Badges (-6 pts) |
+| **2:03 – 2:45** | The Hero Moment | Human approval-gated dispatch via PayPal Agent Toolkit MCP & score drop to 57 |
+| **2:45 – 3:27** | Real Sandbox Proof | Proactive flash sale simulator & 5-step live PayPal REST API verification cycle |
+| **3:27 – 3:48** | Production Architecture | Next.js 14, TypeScript, Prisma, and 21/21 passing automated tests |
 
 ---
 
